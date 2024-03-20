@@ -1,0 +1,20 @@
+{
+  "name": "react-app",
+  "version": "1.0.0",
+  "description": "Personal Project Management Tool",
+  "main": "index.js",
+  "scripts": {
+    "start:frontend": "cd frontend && npm start",
+    "start:backend": "cd backend && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/savinaDaria/React-App.git"
+  },
+  "author": "Daria Savina",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/savinaDaria/React-App/issues"
+  },
+  "homepage": "https://github.com/savinaDaria/React-App#readme"
+}
