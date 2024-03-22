@@ -1,9 +1,10 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { getTypeOrmConfig } from './typeorm.config';
+import { getTypeOrmConfig } from '~/utils/config/typeorm.config';
+import { TaskModule } from '~/modules/task/task.module';
+import { TaskListModule } from '~/modules/task-list/task-list.module';
+import { ActivityLogModule } from '~/modules/activity-log/activity-log.module';
 
 @Module({
   imports: [
@@ -12,8 +13,11 @@ import { getTypeOrmConfig } from './typeorm.config';
       useFactory: async (config: ConfigService) => getTypeOrmConfig(config),
       inject: [ConfigService],
     }),
+    ActivityLogModule,
+    TaskModule,
+    TaskListModule
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

@@ -15,5 +15,6 @@ export function getTypeOrmConfig(config: ConfigService): TypeOrmModuleOptions {
     migrationsTableName: 'migration',
     migrations: [join(__dirname, '**', '/migrations/*.ts')],
     autoLoadEntities: true,
+    ssl: false
   };
 }
