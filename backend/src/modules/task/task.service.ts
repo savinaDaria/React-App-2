@@ -53,13 +53,10 @@ export class TaskService {
             throw new NotFoundException(`Task with the ID "${id}" was not found.`);
         }
 
-        task.name = UpdateTaskDto.name;
-        task.description = UpdateTaskDto.description;
-        task.dueDate=UpdateTaskDto.dueDate;
-        task.listId=UpdateTaskDto.listId;
-        task.priority=UpdateTaskDto.priority;
+        Object.assign(task, UpdateTaskDto);
+        
 
-        return this.tasksRepository.save(task);
+      return this.tasksRepository.save(task);
     }
     
 }

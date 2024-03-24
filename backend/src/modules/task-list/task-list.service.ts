@@ -2,14 +2,14 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TaskListEntity } from './task-list.entity';
-import { CreateTaskListDto, UpdateTaskListDto  } from './dto/index';
+import { CreateTaskListDto, UpdateTaskListDto } from './dto/index';
 
 @Injectable()
 export class TaskListService {
   constructor(
     @InjectRepository(TaskListEntity)
     private readonly listRepository: Repository<TaskListEntity>,
-  ) {}
+  ) { }
 
   async getTaskLists(): Promise<TaskListEntity[]> {
     const lists = await this.listRepository.find();
@@ -31,26 +31,25 @@ export class TaskListService {
     const { name } = createTaskDto;
 
     const list = this.listRepository.create({
-        name
+      name
     });
 
     await this.listRepository.save(list);
     return list;
-}
+  }
 
-async deleteTaskList(id: number): Promise<void> {
+  async deleteTaskList(id: number): Promise<void> {
     await this.listRepository.delete(id)
-}
+  }
 
-async updateTaskList(id: number, UpdateTaskDto: UpdateTaskListDto): Promise<TaskListEntity>{
+  async updateTaskList(id: number, UpdateTaskListDto: UpdateTaskListDto): Promise<TaskListEntity> {
     const list = await this.getTaskListById(id);
-    
+
     if (!list) {
-        throw new NotFoundException(`Task with the ID "${id}" was not found.`);
+      throw new NotFoundException(`Task with the ID "${id}" was not found.`);
     }
 
-    list.name = UpdateTaskDto.name;
-
+    Object.assign(list, UpdateTaskListDto);
     return this.listRepository.save(list);
-}
+  }
 }

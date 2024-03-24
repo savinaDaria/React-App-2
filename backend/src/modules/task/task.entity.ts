@@ -19,7 +19,7 @@ export class TaskEntity {
   @Column('integer', { name: 'list_id' })
   listId: number;
 
-  @Column({ unique: true, nullable: false })
+  @Column({ nullable: false })
   name: string;
 
   @Column({ nullable: true })
@@ -28,7 +28,7 @@ export class TaskEntity {
   @Column({ nullable: true })
   priority: string;
 
-  @Column({ nullable: true, name: 'due_date' })
+  @Column({ nullable: true, name: 'duedate' })
   dueDate: Date;
 
   @CreateDateColumn({ type: 'timestamp', name: 'date_created' })

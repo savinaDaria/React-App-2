@@ -1,7 +1,4 @@
-export class UpdateTaskDto {
-    name?: string;
-    description?: string;
-    listId?:number;
-    priority?:string;
-    dueDate?:Date;
-  }
+import { PartialType } from '@nestjs/mapped-types';
+import { CreateTaskDto } from './create-task.dto';
+
+export class UpdateTaskDto extends PartialType(CreateTaskDto) {}

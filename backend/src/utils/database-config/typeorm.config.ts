@@ -1,6 +1,6 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigService } from '@nestjs/config';
-import { join } from 'path';
+import { DataSource } from 'typeorm';
 
 export function getTypeOrmConfig(config: ConfigService): TypeOrmModuleOptions {
   return {
@@ -11,9 +11,9 @@ export function getTypeOrmConfig(config: ConfigService): TypeOrmModuleOptions {
     username: config.get('POSTGRES_USER'),
     password: config.get('POSTGRES_PASSWORD'),
     database: config.get('POSTGRES_DATABASE'),
-    entities: [join(__dirname, '**', '/entities/*.entity.ts')],
+    entities: ['src/modules/**/*.entity.js'],
     migrationsTableName: 'migration',
-    migrations: [join(__dirname, '**', '/migrations/*.ts')],
+    migrations: ['src/migrations/*.js'],
     autoLoadEntities: true,
     ssl: false
   };

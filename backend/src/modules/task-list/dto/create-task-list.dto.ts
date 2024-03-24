@@ -1,3 +1,8 @@
+import { IsNotEmpty, IsString, IsOptional, Allow } from 'class-validator';
 export class CreateTaskListDto {
-    name: string;
+  @IsNotEmpty()
+  @IsString()
+  name: string;
+  @Allow()
+  otherFieldsNotAllowed:never;
   }
