@@ -1,0 +1,14 @@
+.menuItem {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 10px 50px 10px 5px;
+    border-radius: 8px;
+    cursor: pointer;
+    gap:10px;
+}
+
+.menuItem:hover {
+    color: var(--steel-gray);
+    background-color: var(--cloudy-sky);
+}
