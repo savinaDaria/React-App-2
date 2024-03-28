@@ -1,0 +1,14 @@
+.taskListContainer{
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  gap:20px;
+  position: fixed;
+  top: var(--header-height);
+  bottom: 0;
+  width: 100%;
+  overflow-y: scroll;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray-1) transparent;
+}
+

@@ -1,0 +1,62 @@
+.list {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  min-width: 300px;
+  max-width: 400px;
+  gap: 10px;
+}
+
+.taskContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gray-1) transparent;
+}
+
+.listHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 5px;
+  border-bottom: 1px solid var(--gray-1);
+  border-top: 1px solid var(--gray-1);
+}
+
+.listTitle {
+  font-weight: bold;
+  text-shadow: 0 1px 1px rgb(128, 127, 127);
+  letter-spacing: 0.5px;
+}
+
+.taskCount {
+  font-weight: bold;
+  margin-right: 8px;
+}
+
+.addCardBtn {
+  border: 2px dotted var(--gray-1);
+  background-color: var(--white);
+  color: var(--text-primary-dark);
+  text-transform: none;
+  cursor: pointer;
+  width: 100%;
+  box-shadow: none;
+
+  &:hover {
+    background-color: var(--slate-gray);
+    color: var(--white);
+    border: 2px solid var(--slate-gray);
+    box-shadow: none;
+  }
+}
+
+.menuBtn {
+  color: var(--steel-gray);
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}

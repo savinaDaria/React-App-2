@@ -1,0 +1,82 @@
+
+
+  :global(.MuiOutlinedInput-notchedOutline){
+    border: 1px solid var(--gray-1);
+  }
+  
+  :global(.Mui-focused .MuiOutlinedInput-notchedOutline){
+    border: 2px solid var(--cloudy-sky-1) !important;
+  }
+
+  :global(.MuiInputLabel-root.Mui-focused){
+    color:var(--steel-gray);
+   }
+
+.taskCard {
+  padding: 10px;
+  border: 1px solid var(--gray-1);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.taskTitle {
+  font-weight: bold;
+  text-shadow: 0 1px 1px rgb(128, 127, 127);
+  letter-spacing: 0.5px;
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.taskDescription {
+  color: var(--gray-2);
+}
+
+.moveToSelect{
+  background-color:var(--cloudy-sky-1);
+  color:var(--steel-gray);
+  font-weight: bold;
+  font-size: small;
+}
+
+.dateRow{
+  display: flex;
+  align-items: center;
+  gap:5px;
+}
+
+.priority {
+  padding: 3px 8px;
+}
+
+:global(.MuiChip-icon) {
+  padding: 3px;
+
+  &.low {
+    font-size: 10px;
+    color: rgb(147, 147, 147);
+  }
+
+  &.medium {
+    font-size: 15px;
+    color: rgb(96, 94, 94);
+  }
+
+  .high {
+    font-size: 20px;
+    color: rgb(0, 0, 0);
+  }
+}
+
+.menuBtn {
+  color: var(--steel-gray);
+
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+}

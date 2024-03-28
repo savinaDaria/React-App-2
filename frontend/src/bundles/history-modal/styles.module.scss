@@ -1,0 +1,79 @@
+.modalContent {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--white);
+    max-width: 400px;
+    position: fixed;
+    top:0;
+    right: 0;
+    bottom: 0;
+}
+.modalContainer{ 
+    padding: 10px 20px ;
+    max-height: 100vh;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gray-1) transparent; 
+}
+.modalHeader {
+    display: flex;
+    flex-shrink: 0;
+    font-weight: 800;
+    justify-content: space-between;
+    background-color: var(--st-tropaz);
+    align-items: center;
+    padding-left: 20px;
+    color:var(--white);
+}
+
+.iconButton {
+    width: 35px;
+    min-width: 0;
+    height: 100%;
+    border: none;
+
+    &:hover {
+        border: none;
+    }
+
+    .closeIcon {
+        margin-right: 11px;
+        color: var(--nepal);
+        font-size: var(--font-size-h4);
+    }
+}
+
+.closeButtonWrapper {
+    display: flex;
+    align-items: center;
+    height: 32px;
+    margin: 12px 10px 17px 0;
+}
+
+.modalContainer li {
+    margin-bottom: 25px;
+    line-height: 1.5;
+    font-size: 14px;
+    color:var(--st-tropaz)
+}
+
+.taskSpan {
+    font-weight: bold;
+    color: var(--steel-gray);
+}
+
+.dateSpan {
+    display: block;
+    color: #757575;
+    font-size: 12px;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+.valueSpan{
+    font-weight: bolder; 
+}
+
+.circleIcon{
+    font-size: 15px;
+}
