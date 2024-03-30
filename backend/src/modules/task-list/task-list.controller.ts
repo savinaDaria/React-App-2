@@ -14,18 +14,18 @@ export class TaskListController {
     }
 
     @Get('/:id')
-    getTaskListById(@Param('id') id: number): Promise<TaskListEntity> {
+    async getTaskListById(@Param('id') id: number): Promise<TaskListEntity> {
         return this.taskListService.getTaskListById(id)
     }
 
     @Post()
-    createTaskList(@Body() createTaskDto: CreateTaskListDto
+    async createTaskList(@Body() createTaskDto: CreateTaskListDto
     ): Promise<TaskListEntity> {
         return this.taskListService.createTaskList(createTaskDto);
     }
 
     @Delete('/:id')
-    deleteTask(@Param('id') id: number): Promise<void>{
+    async deleteTask(@Param('id') id: number): Promise<void>{
         return this.taskListService.deleteTaskList(id);
     }
 

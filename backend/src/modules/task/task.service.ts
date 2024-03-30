@@ -29,14 +29,8 @@ export class TaskService {
     }
     
     async createTasks(createTaskDto: CreateTaskDto): Promise<TaskEntity> {
-        const { dueDate,name, description } = createTaskDto;
 
-        const task = this.tasksRepository.create({
-            name,
-            description,
-            dueDate,
-            priority: TaskPriority.LOW
-        });
+        const task = this.tasksRepository.create(createTaskDto);
 
         await this.tasksRepository.save(task);
         return task;

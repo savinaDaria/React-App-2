@@ -14,7 +14,7 @@ export class TaskListEntity {
   @PrimaryGeneratedColumn({ name: 'list_id' }) 
   id: number;
 
-  @Column({ unique: true, nullable: false })
+  @Column({ nullable: false })
   name: string;
 
   @CreateDateColumn({ type: 'timestamp', name: 'date_created' })
@@ -23,6 +23,6 @@ export class TaskListEntity {
   @UpdateDateColumn({ type: 'timestamp', name: 'date_updated' })
   dateUpdated: Date;
 
-  @OneToMany(() => TaskEntity, (task) => task.list)
+  @OneToMany(() => TaskEntity, (task) => task.list, { onDelete: 'CASCADE',eager:true })
   tasks: TaskEntity[];
 }

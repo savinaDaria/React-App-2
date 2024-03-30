@@ -12,7 +12,7 @@ export class TaskListService {
   ) { }
 
   async getTaskLists(): Promise<TaskListEntity[]> {
-    const lists = await this.listRepository.find();
+    const lists = await this.listRepository.find({ relations: ['tasks'] });
 
     return lists;
   }
@@ -28,10 +28,10 @@ export class TaskListService {
   }
 
   async createTaskList(createTaskDto: CreateTaskListDto): Promise<TaskListEntity> {
-    const { name } = createTaskDto;
 
     const list = this.listRepository.create({
-      name
+      ...createTaskDto,
+      tasks: []
     });
 
     await this.listRepository.save(list);
@@ -39,6 +39,12 @@ export class TaskListService {
   }
 
   async deleteTaskList(id: number): Promise<void> {
+    const list = await this.getTaskListById(id);
+
+    if (!list) {
+      throw new NotFoundException(`List with the ID "${id}" was not found.`);
+    }
+
     await this.listRepository.delete(id)
   }
 
@@ -46,7 +52,7 @@ export class TaskListService {
     const list = await this.getTaskListById(id);
 
     if (!list) {
-      throw new NotFoundException(`Task with the ID "${id}" was not found.`);
+      throw new NotFoundException(`List with the ID "${id}" was not found.`);
     }
 
     Object.assign(list, UpdateTaskListDto);

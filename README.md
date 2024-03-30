@@ -11,10 +11,10 @@ You can start both the frontend and backend projects from the root of your proje
 >npm run start:backend
 
 # Creating a new migration
-$ npm run typeorm migration:create ./path-to-migrations-dir/name-of-the-migration-file
+$ npm run typeorm migration:create ./src/migrations/name-of-the-migration-file
 
 # Running migrations
-$ npm run typeorm migration:run -- -d ormconfig.ts
+$ npm run typeorm migration:run -- -d ./src/utils/database-config/connection-config.ts
 
 # Reverting migrations
-$ npm run typeorm migration:revert -- -d ormconfig.ts
+$ npm run typeorm migration:revert -- -d ./src/utils/database-config/connection-config.ts
