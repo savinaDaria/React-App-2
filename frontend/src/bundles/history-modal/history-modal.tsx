@@ -15,7 +15,6 @@ const HistoryModal: React.FC<Properties> = ({
 }) => {
     return (
         <Modal
-            headerLabel={"History"}
             open={isOpen}
             onClose={onClose}
             className={styles.modalWrapper}

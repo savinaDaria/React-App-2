@@ -1,5 +1,4 @@
-// export { useAppDispatch } from './use-app-dispatch/use-app-dispatch.hook.js';
-// export { useAppSelector } from './use-app-selector/use-app-selector.hook.js';
+export { useAppDispatch as useDispatch, useAppSelector as useSelector } from '~/framework/store/store';
 export { useMediaQuery, useTheme } from '@mui/material';
 export {
     useCallback,

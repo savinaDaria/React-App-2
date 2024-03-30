@@ -9,14 +9,26 @@ import {
 
 
 import styles from './styles.module.scss';
+import { DeleteTaskRequest } from '../../types/delete-task.type';
+import { type Task } from '../../types/task.type';
+import { useCallback } from '~/bundles/common/hooks/hooks';
 
 type Properties = MenuItemProps & {
+    task: Task,
     handleEdit: () => void;
+    onTaskDelete: ({ id }: DeleteTaskRequest) => void;
+    onTaskUpdate?: () => void;
 };
 
 const TaskMenu: React.FC<Properties> = ({
-    handleEdit
+    task,
+    handleEdit,
+    onTaskDelete
 }) => {
+    const handleTaskDelete = useCallback(
+        () => onTaskDelete({ id: task.id }),
+        [onTaskDelete, task.id]
+    );
     return (
         <Menu className={styles.menuContainer}>
             <MenuItem
@@ -27,7 +39,7 @@ const TaskMenu: React.FC<Properties> = ({
                     Edit
                 </Typography>
             </MenuItem>
-            <MenuItem onClick={handleEdit}>
+            <MenuItem onClick={handleTaskDelete}>
                 <DeleteIcon fontSize="small" className={styles.delete} />
                 <Typography variant="h6" className={styles.delete}>
                     Delete
