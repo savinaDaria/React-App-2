@@ -7,6 +7,20 @@
   gap: 10px;
 }
 
+
+.inputName {
+    input {
+      padding: 5px 10px;
+
+      &:focus{
+        border:3px solid var(--st-tropaz);
+        border-radius:5px;
+        background-color: var(--white-lilac)  !important;
+      }
+
+    }
+}
+
 .taskContainer {
   display: flex;
   flex-direction: column;
@@ -14,6 +28,11 @@
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--gray-1) transparent;
+}
+
+.flexRow{
+  display: flex;
+  align-items: center;
 }
 
 .listHeader {
@@ -25,7 +44,7 @@
   border-top: 1px solid var(--gray-1);
 }
 
-.listTitle {
+.listTitle, .inputName input:focus {
   font-weight: bold;
   text-shadow: 0 1px 1px rgb(128, 127, 127);
   letter-spacing: 0.5px;
@@ -58,5 +77,7 @@
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
+    padding: 1px;;
+    border-radius: 50%;
   }
 }
