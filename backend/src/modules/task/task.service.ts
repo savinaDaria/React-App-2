@@ -24,12 +24,12 @@ export class TaskService {
     async getTaskById(id: number): Promise<TaskEntity> {
 
         const foundTask = await this.tasksRepository
-        .createQueryBuilder('task')        
-        .leftJoin('task.list', 'list')
-        .select(['task', 'list.name']) 
-        .leftJoinAndSelect('task.logs', 'logs')
-        .where('task.id = :id', { id })
-        .getOne();
+            .createQueryBuilder('task')
+            .leftJoin('task.list', 'list')
+            .select(['task', 'list.name'])
+            .leftJoinAndSelect('task.logs', 'logs')
+            .where('task.id = :id', { id })
+            .getOne();
 
         if (!foundTask) {
             throw new NotFoundException(`Task with the given ID "${id}" was not found.`);
@@ -61,17 +61,24 @@ export class TaskService {
 
         const oldValues = { ...task };
 
-        for (const prop in updateTaskDto) {
-            if (Object.prototype.hasOwnProperty.call(updateTaskDto, prop)) {
-                task[prop] = updateTaskDto[prop];
+        await this.tasksRepository.update(id, updateTaskDto);
+        const newTask = await this.getTaskById(id);
 
-                await this.logActivity(ActivityTypeBasic.UPDATE, task.id, JSON.stringify(oldValues[prop]), (JSON.stringify(task[prop])), prop);
+        for (const prop in updateTaskDto) {
+            if (updateTaskDto.hasOwnProperty(prop)) {
+                let newValue: string, oldValue: string;
+                if (prop === 'listId') {
+                    newValue = newTask.list.name;
+                    oldValue = oldValues.list.name;
+                }
+                else {
+                    newValue = typeof updateTaskDto[prop] == 'string' ? updateTaskDto[prop] : JSON.stringify(updateTaskDto[prop]);
+                    oldValue = typeof oldValues[prop] == 'string' ? oldValues[prop] : JSON.stringify(oldValues[prop]);
+                }
+                await this.logActivity(ActivityTypeBasic.UPDATE, oldValues.id, oldValue, newValue, prop);
             }
         }
-        Object.assign(task, updateTaskDto);
-
-
-        return this.tasksRepository.save(task);
+        return newTask;
     }
 
     private async logActivity(
@@ -81,6 +88,7 @@ export class TaskService {
         newValue?: any,
         property?: string,
     ): Promise<void> {
+
         const createActivityLogDto: CreateActivityLogDto = {
             taskId: id,
             actionType,

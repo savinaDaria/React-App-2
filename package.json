@@ -7,7 +7,7 @@
     "init": "cd frontend && npm install && cd ../backend && npm install",
     "start:frontend": "cd frontend && npm start",
     "start:backend": "cd backend && npm start",
-    "start:backend:dev": "cd backend && npm start:dev",
+    "start:backend:dev": "cd backend && npm run start:dev",
     "start:migration":" cd backend && npm run typeorm migration:run -- -d src/utils/database-config/connection-config.ts"
   },
   "repository": {

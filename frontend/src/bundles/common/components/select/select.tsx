@@ -22,7 +22,7 @@ type SelectOption<T> = {
 
 type Properties<T extends FieldValues> = {
     control: Control<T, null>;
-    errors: FieldErrors<T>;
+    errors?: FieldErrors<T> ;
     name: FieldPath<T>;
     options: SelectOption<string | number>[];
     placeholder?: string;
@@ -44,7 +44,7 @@ const Select = <T extends FieldValues>({
     startAdornmentText,
 }: Properties<T>): JSX.Element => {
     const { field } = useFormController({ name, control });
-    const error = errors[name]?.message;
+    const error = errors?errors[name]?.message :"";
     const hasError = Boolean(error);
 
     const selectStyles = getValidClassNames(

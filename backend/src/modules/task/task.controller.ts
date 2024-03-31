@@ -31,6 +31,7 @@ export class TaskController {
 
     @Patch('/:id')
     async updateTask(@Param('id') id: number, @Body() updateTaskDto: UpdateTaskDto): Promise<TaskEntity> {
+  
         return this.tasksService.updateTask(id, updateTaskDto);
     }
 

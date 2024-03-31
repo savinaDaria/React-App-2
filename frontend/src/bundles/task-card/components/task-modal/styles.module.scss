@@ -12,10 +12,18 @@
     background-color: var(--white);
     display: flex;
     flex-direction: row;
+
+    justify-content: center;
+
     max-height: 70vh;
+    min-height: 40vh;
     width: 100%;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+
+    &.centered{
+        align-items: center;
+    }
 }
 
 .modalHeader {
@@ -162,7 +170,7 @@
     scrollbar-width: thin;
     scrollbar-color: var(--gray-1) transparent;
     border-bottom-right-radius: 10px;
-
+    width:20%;
     ul {
         padding: 0;
     }

@@ -15,7 +15,15 @@ const { reducer, actions } = createSlice({
             getTask.fulfilled,
             (state,action) => {
                 state.dataStatus = DataStatus.FULFILLED;
-                state.task=action.payload
+                state.task=action.payload;
+            },
+        );
+        
+        builder.addCase(
+            updateTask.fulfilled,
+            (state, action) => {
+                state.dataStatus = DataStatus.FULFILLED;
+                state.task = action.payload;
             },
         );
         builder.addMatcher(

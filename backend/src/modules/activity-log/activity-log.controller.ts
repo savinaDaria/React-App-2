@@ -19,9 +19,9 @@ export class ActivityLogController {
     }
 
     @Post()
-    createActivityLog(@Body() createTaskDto: CreateActivityLogDto
+    createActivityLog(@Body() createLogDto: CreateActivityLogDto
     ): Promise<ActivityLogEntity> {
-        return this.taskListService.createActivityLog(createTaskDto);
+        return this.taskListService.createActivityLog(createLogDto);
     }
 
 }

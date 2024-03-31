@@ -35,12 +35,12 @@ export class ActivityLogService {
         return log;
     }
 
-    async createActivityLog(createTaskDto: CreateActivityLogDto): Promise<ActivityLogEntity> {
+    async createActivityLog(createLogDto: CreateActivityLogDto): Promise<ActivityLogEntity> {
+        
+        const log = this.activityLogRepository.create(createLogDto);
 
-        const list = this.activityLogRepository.create(createTaskDto);
-
-        await this.activityLogRepository.save(list);
-        return list;
+        await this.activityLogRepository.save(log);
+        return log;
     }
 
 }

@@ -17,6 +17,7 @@ import { GetTaskRequest } from '~/bundles/task-card/types/get-task.type';
 import { DEFAULT_TASK_PAYLOAD } from '~/bundles/task-card/constants/default.constants';
 import { RootState } from '~/framework/store/store';
 import { MoveTaskRequest } from '~/bundles/task-card/types/move-task.type';
+import { taskListActions } from '../../store/slice';
 
 type Properties = {
     taskList: List;
@@ -39,7 +40,7 @@ const TaskList: React.FC<Properties> = ({
 
     const moveToOptions = lists.filter(list => list.id !== taskList.id).map(list => ({
         label: list.name,
-        value: list.id.toString(),
+        value: list.id,
     }));
     useEffect(() => {
         isEditInputActive && inputRef.current?.focus();
@@ -69,15 +70,12 @@ const TaskList: React.FC<Properties> = ({
 
     const handleResetTask = useCallback(() => {
         dispatch(taskActions.resetState());
+        dispatch(taskListActions.getLists());
     }, [dispatch]);
 
     const handleCreateTask = useCallback((request: CreateTaskRequest) => {
         dispatch(taskActions.createTask(request));
     }, [dispatch]);
-
-    // const handleUpdateTask = useCallback((request: UpdateTaskRequest) => {
-    //     dispatch(taskActions.updateTask(request));
-    // }, [dispatch]);
 
     const handleMoveTask = useCallback((request: MoveTaskRequest) => {
         dispatch(taskActions.moveTask(request));

@@ -30,7 +30,6 @@ const Textarea = <T extends FieldValues>({
     ...props
 }: Properties<T>): JSX.Element => {
     const { field } = useFormController({ name, control });
-
     const error = errors[name]?.message;
     const hasError = Boolean(error);
 

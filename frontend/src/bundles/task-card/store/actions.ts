@@ -38,7 +38,7 @@ const createTask = createAsyncThunk<
 
         try {
             const task = await extra.taskApi.createTask(payload);
-            return { ...task, recentlyCreated: true };
+            return task;
         } catch (error) {
             rejectWithValue({
                 _type: 'rejected',
@@ -60,7 +60,7 @@ const updateTask = createAsyncThunk<
 
         try {
             const task = await extra.taskApi.updateTask(id, updateBody);
-            return { ...task, recentlyCreated: false };
+            return task;
         } catch (error) {
             rejectWithValue({
                 _type: 'rejected',

@@ -1,23 +1,28 @@
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { SelectChangeEvent } from '@mui/material';
-// import styles from './styles.module.scss';
+import { Control, FieldPath, FieldValues } from 'react-hook-form';
+import { useFormController } from '../../hooks/hooks';
 
-type Properties = {
-    label: string;
-    className?: string;
+type Properties<T extends FieldValues> = {
+  control: Control<T, null>;
+  name: FieldPath<T>;
+  className?: string;
 };
 
-const Calendar: React.FC<Properties> = ({ label, className=''  }) => {
-
-    return (
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <div className={className}>
-            <DatePicker label={label} name="startDate"  />
-          </div>
-        </LocalizationProvider>
-      );
+const Calendar= <T extends FieldValues>({
+  control,
+  name,
+  className,
+}: Properties<T>): JSX.Element =>  {
+  const { field } = useFormController({ name, control });
+  return (
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <div className={className}>
+        <DatePicker {...field} />
+      </div>
+    </LocalizationProvider>
+  );
 };
 
 export { Calendar };

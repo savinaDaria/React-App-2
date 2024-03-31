@@ -3,7 +3,7 @@ import { getValidClassNames } from '../../../common/helpers/get-valid-class-name
 import styles from './styles.module.scss';
 import { MoreVert as MoreVertIcon, CalendarToday as CalendarIcon, FiberManualRecord as FiberManualRecordIcon } from '@mui/icons-material';
 import { Chip, Dropdown, MenuButton, Typography } from '~/bundles/common/components/components';
-import { useCallback, useEffect, useState } from '~/bundles/common/hooks/hooks';
+import { useCallback, useEffect, useSelector, useState } from '~/bundles/common/hooks/hooks';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { TaskModal } from '../task-modal/task-modal';
 import { TaskMenu } from '../task-menu/task-menu';
@@ -12,10 +12,11 @@ import { DeleteTaskRequest } from '../../types/delete-task.type';
 import { MoveTaskRequest } from '../../types/move-task.type';
 import { formatDateTime } from '../../../common/helpers/helpers';
 import { GetTaskRequest } from '../../types/get-task.type';
+import { RootState } from '~/framework/store/store';
 
 type MenuItemOption = {
   label: string;
-  value: string
+  value: number
 }
 interface TaskCardProps {
   task: Task,
@@ -26,7 +27,7 @@ interface TaskCardProps {
   onMoveTask: (updateBody: MoveTaskRequest) => void;
   moveToOptions: MenuItemOption[]
 }
-
+const getCurrentTaskState = (state: RootState) => state.currentTask;
 const TaskCard: React.FC<TaskCardProps> = ({
   task,
   onTaskDelete,
@@ -58,6 +59,10 @@ const TaskCard: React.FC<TaskCardProps> = ({
     onTaskView({ id: task.id });
     setisModalOpen(true);
   }, []);
+
+  const {task:currentTask,dataStatus} = useSelector(
+    (rootState) => getCurrentTaskState(rootState),
+  );
   return (
     <div className={styles.taskCard}>
       <div className={styles.cardHeader}>
@@ -97,11 +102,14 @@ const TaskCard: React.FC<TaskCardProps> = ({
         </Select>
       </FormControl>
 
-      <TaskModal
-        isOpen={isModalOpen}
-        onClose={handleModalClose}
-        moveToOptions={moveToOptions}
-      />
+      {currentTask &&
+        <TaskModal
+          task={currentTask}
+          taskDataLoadStatus={dataStatus}
+          isOpen={isModalOpen}
+          onClose={handleModalClose}
+          moveToOptions={moveToOptions}
+        />}
     </div>
   );
 }
