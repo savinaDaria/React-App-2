@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   OneToMany,
+  DeleteDateColumn,
 } from 'typeorm';
 
 import { TaskEntity } from '../task/task.entity'; 
@@ -23,6 +24,9 @@ export class TaskListEntity {
   @UpdateDateColumn({ type: 'timestamp', name: 'date_updated' })
   dateUpdated: Date;
 
-  @OneToMany(() => TaskEntity, (task) => task.list, { onDelete: 'CASCADE',eager:true })
+  @DeleteDateColumn({ type: 'timestamp', name: 'date_deleted', nullable: true })
+  dateDeleted: Date; 
+
+  @OneToMany(() => TaskEntity, (task) => task.list, { eager:true })
   tasks: TaskEntity[];
 }

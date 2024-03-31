@@ -9,13 +9,12 @@ export class TaskListController {
 
     @Get()
     async getAllTaskLists(): Promise<TaskListEntity[]> {
-        return this.taskListService.getTaskLists();
-        
+        return this.taskListService.getTaskLists();        
     }
 
     @Get('/:id')
     async getTaskListById(@Param('id') id: number): Promise<TaskListEntity> {
-        return this.taskListService.getTaskListById(id)
+        return this.taskListService.getTaskListById(id);
     }
 
     @Post()

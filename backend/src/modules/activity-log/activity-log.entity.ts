@@ -19,6 +19,9 @@ export class ActivityLogEntity {
   @Column({ name: 'action_type', nullable: false })
   actionType: string;
 
+  @Column({ name: 'property'})
+  property: string;
+
   @Column({ name: 'old_value'})
   oldValue: string;
 

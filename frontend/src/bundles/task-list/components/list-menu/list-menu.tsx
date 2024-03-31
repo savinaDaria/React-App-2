@@ -9,9 +9,9 @@ import {
 
 
 import styles from './styles.module.scss';
-import { type List } from '../types/list.type';
+import { type List } from '../../types/list.type';
 import { useCallback } from '~/bundles/common/hooks/hooks';
-import { DeleteListRequest } from '../types/delete-list.type';
+import { DeleteListRequest } from '../../types/delete-list.type';
 
 type Properties = MenuItemProps & {
     taskList: List;

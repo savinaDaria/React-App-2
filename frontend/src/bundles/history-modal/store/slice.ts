@@ -1,5 +1,5 @@
 import { createSlice, isAnyOf } from "@reduxjs/toolkit";
-import { createTask, getTask, deleteTask,moveTask, updateTask } from "./actions";
+import { getAllLogs, getTaskLogs } from "./actions";
 import { DataStatus } from "~/framework/enums/data-status.enum";
 import { initialState, sliceName } from "./store.config";
 
@@ -7,24 +7,25 @@ import { initialState, sliceName } from "./store.config";
 const { reducer, actions } = createSlice({
     initialState,
     name: sliceName,
-    reducers: {
-        resetState: () => initialState,
-    },
+    reducers: {},
     extraReducers(builder) {
         builder.addCase(
-            getTask.fulfilled,
-            (state,action) => {
+            getTaskLogs.fulfilled,
+            (state) => {
                 state.dataStatus = DataStatus.FULFILLED;
-                state.task=action.payload
+            },
+        );
+        builder.addCase(
+            getAllLogs.fulfilled,
+            (state, action) => {
+                state.dataStatus = DataStatus.FULFILLED;
+                if (action.payload) state.logs = action.payload;
             },
         );
         builder.addMatcher(
             isAnyOf(
-                createTask.pending,
-                getTask.pending,
-                deleteTask.pending,
-                moveTask.pending,
-                updateTask.pending
+                getAllLogs.pending,
+                getTaskLogs.pending,
             ),
             (state) => {
                 state.dataStatus = DataStatus.PENDING;
@@ -32,11 +33,8 @@ const { reducer, actions } = createSlice({
         );
         builder.addMatcher(
             isAnyOf(
-                createTask.rejected,
-                getTask.rejected,
-                deleteTask.rejected,
-                moveTask.rejected,
-                updateTask.rejected
+                getAllLogs.rejected,
+                getTaskLogs.rejected
             ),
             (state) => {
                 state.dataStatus = DataStatus.REJECTED;
@@ -45,12 +43,9 @@ const { reducer, actions } = createSlice({
     },
 });
 
-const taskActions = {
-    createTask,
-    getTask,
-    deleteTask,
-    updateTask,
-    moveTask,
+const logActions = {
+    getAllLogs,
+    getTaskLogs,
     ...actions
 };
-export { taskActions, reducer };
+export { logActions, reducer };

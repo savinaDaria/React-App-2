@@ -12,13 +12,21 @@ export class ActivityLogService {
     ) { }
 
     async getActivityLogs(): Promise<ActivityLogEntity[]> {
-        const lists = await this.activityLogRepository.find();
+        const lists = await this.activityLogRepository 
+        .find({
+            relations: ['task'],
+            withDeleted: true,
+          });
 
         return lists;
     }
 
     async getActivityLogByTaskId(taskId: number): Promise<ActivityLogEntity> {
-        const log = await this.activityLogRepository.findOneBy({ taskId});
+        const log = await this.activityLogRepository.findOne({
+            where: { taskId },
+            relations: ['task'],
+            withDeleted: true, 
+          });
 
         if (!log) {
             throw new NotFoundException(`ActivityLog with task id ${taskId} not found`);
@@ -28,14 +36,8 @@ export class ActivityLogService {
     }
 
     async createActivityLog(createTaskDto: CreateActivityLogDto): Promise<ActivityLogEntity> {
-        const { taskId,actionType,oldValue,newValue } = createTaskDto;
 
-        const list = this.activityLogRepository.create({
-            taskId,
-            actionType,
-            oldValue,
-            newValue
-        });
+        const list = this.activityLogRepository.create(createTaskDto);
 
         await this.activityLogRepository.save(list);
         return list;

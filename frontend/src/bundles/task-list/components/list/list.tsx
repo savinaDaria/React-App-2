@@ -1,22 +1,22 @@
 import styles from './styles.module.scss';
-import { TaskCard } from "~/bundles/task-card/task";
+import { TaskCard } from "~/bundles/task-card/components/task-card/task";
 import { MoreVert as MoreVertIcon, Add as AddIcon } from '@mui/icons-material';
 import { Button, Dropdown, Grid, MenuButton, Typography } from '~/bundles/common/components/components';
-import { ListMenu } from './components/list-menu';
-import { type List } from './types/list.type';
-import { DeleteListRequest } from './types/delete-list.type';
+import { ListMenu } from '../list-menu/list-menu';
+import { type List } from '../../types/list.type';
+import { DeleteListRequest } from '../../types/delete-list.type';
 import { useCallback, useDispatch, useEffect, useRef, useSelector, useState } from '~/bundles/common/hooks/hooks';
-import { UpdateListRequest } from './types/update-list.type';
+import { UpdateListRequest } from '../../types/update-list.type';
 import { TextField } from '@mui/material';
-import { getValidClassNames } from '../common/helpers/helpers';
-import { taskActions } from '../task-card/store/slice';
-import { CreateTaskRequest } from '../task-card/types/create-task.type';
-import { DeleteTaskRequest } from '../task-card/types/delete-task.type';
+import { getValidClassNames } from '~/bundles/common/helpers/helpers';
+import { taskActions } from '~/bundles/task-card/store/slice';
+import { CreateTaskRequest } from '~/bundles/task-card/types/create-task.type';
+import { DeleteTaskRequest } from '~/bundles/task-card/types/delete-task.type';
 // import { UpdateTaskRequest } from '../task-card/types/update-task.type';
-// import { GetTaskRequest } from '../task-card/types/get-task.type';
-import { DEFAULT_TASK_PAYLOAD } from '../task-card/constants/default.constants';
+import { GetTaskRequest } from '~/bundles/task-card/types/get-task.type';
+import { DEFAULT_TASK_PAYLOAD } from '~/bundles/task-card/constants/default.constants';
 import { RootState } from '~/framework/store/store';
-import { MoveTaskRequest } from '../task-card/types/move-task.type';
+import { MoveTaskRequest } from '~/bundles/task-card/types/move-task.type';
 
 type Properties = {
     taskList: List;
@@ -37,7 +37,7 @@ const TaskList: React.FC<Properties> = ({
         (rootState) => getListsState(rootState).taskLists,
     );
 
-    const moveToOptions = lists.filter(list=>list.id!==taskList.id).map(list => ({
+    const moveToOptions = lists.filter(list => list.id !== taskList.id).map(list => ({
         label: list.name,
         value: list.id.toString(),
     }));
@@ -59,12 +59,16 @@ const TaskList: React.FC<Properties> = ({
 
     const dispatch = useDispatch();
 
-    // const handleGetTask = useCallback((request: GetTaskRequest) => {
-    //     dispatch(taskActions.getTask(request));
-    // }, [dispatch]);
+    const handleGetTask = useCallback((request: GetTaskRequest) => {
+        dispatch(taskActions.getTask(request));
+    }, [dispatch]);
 
     const handleDeleteTask = useCallback((request: DeleteTaskRequest) => {
         dispatch(taskActions.deleteTask(request));
+    }, [dispatch]);
+
+    const handleResetTask = useCallback(() => {
+        dispatch(taskActions.resetState());
     }, [dispatch]);
 
     const handleCreateTask = useCallback((request: CreateTaskRequest) => {
@@ -133,6 +137,8 @@ const TaskList: React.FC<Properties> = ({
                         task={task}
                         key={task.id}
                         onTaskDelete={handleDeleteTask}
+                        onTaskView={handleGetTask}
+                        onTaskClose={handleResetTask}
                         moveToOptions={moveToOptions}
                         onMoveTask={handleMoveTask}
                     />))}

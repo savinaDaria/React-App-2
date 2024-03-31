@@ -4,24 +4,29 @@ import { AppEnvironment } from '../enums/app-environment.enum';
 import { TaskListApiService } from '~/bundles/task-list/api/list-api';
 import { reducer as taskListReducer } from '~/bundles/task-list/store/slice';
 import { reducer as taskReducer } from '~/bundles/task-card/store/slice';
+import { reducer as logsReducer } from '~/bundles/history-modal/store/slice';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { TaskApiService } from '~/bundles/task-card/api/task-api';
+import { ActivityLogService } from '~/bundles/history-modal/api/log-api';
 
 type RootReducer = {
     taskLists: typeof taskListReducer,
-    task: typeof taskReducer 
+    task: typeof taskReducer,
+    logs: typeof logsReducer
 };
 
 const ExtraArguments = {
     listApi: new TaskListApiService(import.meta.env.VITE_APP_PROXY_SERVER_URL),
-    taskApi: new TaskApiService(import.meta.env.VITE_APP_PROXY_SERVER_URL)
+    taskApi: new TaskApiService(import.meta.env.VITE_APP_PROXY_SERVER_URL),
+    activityLogApi: new ActivityLogService(import.meta.env.VITE_APP_PROXY_SERVER_URL)
 };
 
 const store = configureStore({
     devTools: import.meta.env.VITE_APP_NODE_ENV!== AppEnvironment.PRODUCTION,
     reducer: {
       taskLists: taskListReducer ,
-      task:taskReducer 
+      currentTask:taskReducer ,
+      logs:logsReducer
     },
     middleware: (getDefaultMiddleware) => 
         getDefaultMiddleware({

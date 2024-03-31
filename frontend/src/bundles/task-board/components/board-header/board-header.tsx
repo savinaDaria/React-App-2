@@ -3,21 +3,23 @@ import { History as HistoryIcon, Add as AddIcon } from '@mui/icons-material';
 import styles from './styles.module.scss';
 import { getValidClassNames } from "~/bundles/common/helpers/get-valid-class-names.helper";
 import { useCallback, useState } from '~/bundles/common/hooks/hooks';
-import { HistoryModal } from "~/bundles/history-modal/history-modal";
+import { HistoryModal } from "~/bundles/history-modal/components/board-history/board-history";
 import { CreateListRequest } from "~/bundles/task-list/types/create-list.type";
 import { DEFAULT_TASK_LIST_PAYLOAD } from "~/bundles/task-list/constants/default.constants";
 
 type Properties = {
   onCreateList: ({ name }: CreateListRequest) => void;
+  onHistoryOpen: ()=>void;
 }
-const BoardHeader: React.FC<Properties> = ({ onCreateList }) => {
+const BoardHeader: React.FC<Properties> = ({ onCreateList, onHistoryOpen }) => {
   const [isHistoryModalOpen, setisHistoryModalOpen] = useState(false);
   const handleHistoryModalClose = useCallback(() => {
     setisHistoryModalOpen(false);
   }, []);
 
-  const handleHistoryModalOpen = useCallback(() => {
-    setisHistoryModalOpen(true);
+  const handleHistoryModalOpen = useCallback(() => {       
+    onHistoryOpen();
+    setisHistoryModalOpen(true); 
   }, []);
 
   const handleListCreate = useCallback(

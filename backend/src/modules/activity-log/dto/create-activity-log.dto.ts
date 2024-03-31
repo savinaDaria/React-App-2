@@ -3,4 +3,5 @@ export class CreateActivityLogDto {
     oldValue?:string;
     newValue?:string;
     actionType:string;
+    property?:string;
   }

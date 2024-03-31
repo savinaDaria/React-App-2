@@ -10,7 +10,7 @@ You can start both the frontend and backend projects from the root of your proje
 
 >npm run start:backend
 
-# Creating a new migration
+# Creating a new migration cd backend
 $ npm run typeorm migration:create ./src/migrations/name-of-the-migration-file
 
 # Running migrations

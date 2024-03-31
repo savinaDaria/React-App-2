@@ -1,7 +1,7 @@
 const TaskPriority = {
-    LOW: 'LOW',
-    MEDIUM: 'MEDIUM',
-    HIGH: 'HIGH'
+    LOW: 'Low',
+    MEDIUM: 'Medium',
+    HIGH: 'High'
 } as const
 
 export { TaskPriority };

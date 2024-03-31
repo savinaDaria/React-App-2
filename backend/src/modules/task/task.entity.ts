@@ -7,6 +7,7 @@ import {
   ManyToOne,
   JoinColumn,
   OneToMany,
+  DeleteDateColumn,
 } from 'typeorm';
 import { TaskListEntity } from '../task-list/task-list.entity';
 import { ActivityLogEntity } from '../activity-log/activity-log.entity';
@@ -36,6 +37,9 @@ export class TaskEntity {
 
   @UpdateDateColumn({ type: 'timestamp', name: 'date_updated' })
   dateUpdated: Date;
+
+  @DeleteDateColumn({ type: 'timestamp', name: 'date_deleted', nullable: true })
+    dateDeleted: Date; 
 
   @ManyToOne(() => TaskListEntity, (list) => list.tasks)
   @JoinColumn({ name: 'list_id' })

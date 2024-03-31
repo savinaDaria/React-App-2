@@ -3,7 +3,7 @@ import { ActivityLogService } from './activity-log.service';
 import { CreateActivityLogDto } from './dto/index';
 import { ActivityLogEntity } from './activity-log.entity';
 
-@Controller('task-lists')
+@Controller('activity-logs')
 export class ActivityLogController {
     constructor(private taskListService: ActivityLogService) {}
 

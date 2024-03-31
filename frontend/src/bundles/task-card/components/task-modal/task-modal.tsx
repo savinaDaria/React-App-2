@@ -1,21 +1,27 @@
 import { Button, Calendar, Input, Modal, Typography } from '~/bundles/common/components/components';
 import styles from './styles.module.scss';
 import { Divider } from '@mui/material';
-import { CloseRounded } from '@mui/icons-material';
-import { HistoryRow } from '~/bundles/history-modal/history-row';
-import { useCallback, useState } from '~/bundles/common/hooks/hooks';
+import { useCallback, useState, useForm, useSelector, useEffect } from '~/bundles/common/hooks/hooks';
 import { FormControl, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import { Cancel as CancelIcon, Save as SaveIcon, Edit as EditIcon, Adjust as StatusIcon, Sell as ProrityIcon, CalendarToday as CalendarIcon } from '@mui/icons-material';
-import { useForm } from '~/bundles/common/hooks/hooks';
-import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import {
+    CloseRounded as CloseRoundedIcon,
+    KeyboardArrowDown as KeyboardArrowDownIcon,
+    Cancel as CancelIcon,
+    Save as SaveIcon,
+    Edit as EditIcon,
+    Adjust as StatusIcon,
+    Sell as ProrityIcon,
+    CalendarToday as CalendarIcon
+} from '@mui/icons-material';
 import { Textarea } from '~/bundles/common/components/textarea/textarea';
-import { Task } from '../../types/task.type';
+import { TaskHistory } from '~/bundles/history-modal/components/task-history/task-history';
+import { formatDateTime } from '~/bundles/common/helpers/helpers';
+import { RootState } from '~/framework/store/store';
 type MenuItemOption = {
     label: string;
     value: string
 }
 type Properties = {
-    task: Task;
     isOpen: boolean;
     onClose: () => void;
     moveToOptions: MenuItemOption[];
@@ -28,14 +34,23 @@ type FormInputs = {
     dueDate: string
 }
 
+const getCurrentTaskState = (state: RootState) => state.currentTask;
+
 const TaskModal: React.FC<Properties> = ({
-    task,
     isOpen,
     onClose,
     moveToOptions
 }) => {
 
     const [isEditMode, setIsEditMode] = useState(false);
+
+    const task = useSelector(
+        (rootState) => getCurrentTaskState(rootState).task,
+    );
+
+    useEffect(() => {
+        if (!task) onClose();
+    }, []);
 
     const handleEditMode = useCallback(() => {
         setIsEditMode(!isEditMode);
@@ -51,11 +66,11 @@ const TaskModal: React.FC<Properties> = ({
     } = useForm<FormInputs>(
         {
             defaultValues: {
-                name: task.name,
-                priority: task.priority,
-                description: task.description,
-                listId: task.listId,
-                dueDate: task.dueDate
+                name: task?.name,
+                priority: task?.priority,
+                description: task?.description,
+                listId: task?.listId,
+                dueDate: task?.dueDate
             }
         }
     );
@@ -73,7 +88,7 @@ const TaskModal: React.FC<Properties> = ({
                             className={styles.iconButton}
                             label=""
                             variant="outlined"
-                            endIcon={<CloseRounded className={styles.closeIcon} />}
+                            endIcon={<CloseRoundedIcon className={styles.closeIcon} />}
                         />
                     </div>
                 </div>
@@ -91,7 +106,7 @@ const TaskModal: React.FC<Properties> = ({
                                     name="name"
                                 />
                                 :
-                                <Typography variant='h3' className={styles.typography}>{task.name}</Typography>
+                                <Typography variant='h3' className={styles.typography}>{task?.name}</Typography>
                             }
                             {isEditMode
                                 ?
@@ -157,7 +172,9 @@ const TaskModal: React.FC<Properties> = ({
                                                 label={""}
                                                 className={styles.input} />
                                             :
-                                            <div className={styles.value}>{task.dueDate}</div>}
+                                            <div className={styles.value}>
+                                                {task?.dueDate && formatDateTime(task?.dueDate, 'Date')}
+                                            </div>}
 
                                     </div>
                                 </div>
@@ -179,7 +196,7 @@ const TaskModal: React.FC<Properties> = ({
                                                 <MenuItem value={'In progress'}>High</MenuItem>
                                             </Select>
                                             :
-                                            <div className={styles.value}>{task.priority}</div>}
+                                            <div className={styles.value}>{task?.priority}</div>}
                                     </div>
                                 </div>
                             </div>
@@ -197,79 +214,11 @@ const TaskModal: React.FC<Properties> = ({
                                         name={'description'}
                                     />
                                     :
-                                    <p>{task.description}</p>}
+                                    <p>{task?.description}</p>}
                             </div>
                         </div>
                     </div>
-                    <div className={styles.taskHistory}>
-                        <Typography variant='h3' className={styles.typography}>Activity</Typography>
-                        <ul>
-                            <HistoryRow
-                                actionName={'added'}
-                                taskName={'Document Review'}
-                                newValue={'Planned'}
-                                date={'Mar 5 at 5:11 pm'} />
-                            <HistoryRow
-                                actionName={'renamed'}
-                                taskName={'Dev review'}
-                                oldValue={'Dev check'}
-                                newValue={'Dev docs'}
-                                date={'Mar 5 at 5:10 pm'} />
-                            <HistoryRow
-                                actionName={'added'}
-                                taskName={'Document Review'}
-                                newValue={'Planned'}
-                                date={'Mar 5 at 5:10 pm'} />
-                            <HistoryRow
-                                actionName={'added'}
-                                taskName={'Document Review'}
-                                newValue={'Planned'}
-                                date={'Mar 5 at 5:10 pm'} />
-                            <HistoryRow
-                                actionName={'renamed'}
-                                taskName={'Dev review'}
-                                oldValue={'Dev check'}
-                                newValue={'Dev docs'}
-                                date={'Mar 5 at 5:10 pm'} />
-                            <HistoryRow
-                                actionName={'added'}
-                                taskName={'Document Review'}
-                                newValue={'Planned'}
-                                date={'Mar 5 at 5:10 pm'} />
-                            <HistoryRow
-                                actionName={'added'}
-                                taskName={'Document Review'}
-                                newValue={'Planned'}
-                                date={'Mar 5 at 5:10 pm'} />
-                            <HistoryRow
-                                actionName={'renamed'}
-                                taskName={'Dev review'}
-                                oldValue={'Dev check'}
-                                newValue={'Dev docs'}
-                                date={'Mar 5 at 5:10 pm'} />
-                            <HistoryRow
-                                actionName={'added'}
-                                taskName={'Document Review'}
-                                newValue={'Planned'}
-                                date={'Mar 5 at 5:10 pm'} />
-                            <HistoryRow
-                                actionName={'added'}
-                                taskName={'Document Review'}
-                                newValue={'Planned'}
-                                date={'Mar 5 at 5:10 pm'} />
-                            <HistoryRow
-                                actionName={'renamed'}
-                                taskName={'Dev review'}
-                                oldValue={'Dev check'}
-                                newValue={'Dev docs'}
-                                date={'Mar 5 at 5:10 pm'} />
-                            <HistoryRow
-                                actionName={'added'}
-                                taskName={'Document Review'}
-                                newValue={'Planned'}
-                                date={'Mar 5 at 5:34 pm'} />
-                        </ul>
-                    </div>
+                    {task && <TaskHistory task={task} />}
                 </div>
             </div>
         </Modal >

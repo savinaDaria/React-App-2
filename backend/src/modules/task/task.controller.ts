@@ -21,12 +21,12 @@ export class TaskController {
     @Post()
     createTask(@Body() createTaskDto: CreateTaskDto
     ): Promise<TaskEntity> {
-        return this.tasksService.createTasks(createTaskDto);
+        return this.tasksService.createTask(createTaskDto);
     }
 
     @Delete('/:id')
     deleteTask(@Param('id') id: number): Promise<void>{
-        return this.tasksService.deleteTasks(id);
+        return this.tasksService.deleteTask(id);
     }
 
     @Patch('/:id')

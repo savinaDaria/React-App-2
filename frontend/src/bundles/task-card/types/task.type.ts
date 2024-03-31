@@ -1,4 +1,5 @@
 import { TaskPriority } from "~/bundles/common/enums/task-priority.enum";
+import { ActivityLog } from "~/bundles/history-modal/types/log.type";
 
 type Task = {
     id: number,
@@ -9,6 +10,7 @@ type Task = {
     dueDate?: string,
     dateCreated: string,
     dateUpdated: string,
+    logs:ActivityLog[]
   }
   
   export {type Task};

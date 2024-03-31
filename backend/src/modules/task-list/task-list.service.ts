@@ -3,12 +3,17 @@ import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TaskListEntity } from './task-list.entity';
 import { CreateTaskListDto, UpdateTaskListDto } from './dto/index';
+import { TaskEntity } from '../task/task.entity';
+import { TaskService } from '../task/task.service';
 
 @Injectable()
 export class TaskListService {
   constructor(
     @InjectRepository(TaskListEntity)
     private readonly listRepository: Repository<TaskListEntity>,
+    @InjectRepository(TaskEntity)
+    private readonly taskRepository: Repository<TaskEntity>,
+    private readonly taskService: TaskService, 
   ) { }
 
   async getTaskLists(): Promise<TaskListEntity[]> {
@@ -44,8 +49,11 @@ export class TaskListService {
     if (!list) {
       throw new NotFoundException(`List with the ID "${id}" was not found.`);
     }
-
-    await this.listRepository.delete(id)
+    //await this.taskRepository.softDelete({ listId: id });
+    for (const task of list.tasks) {
+      await this.taskService.deleteTask(task.id);
+    }
+    await this.listRepository.softDelete(id)
   }
 
   async updateTaskList(id: number, UpdateTaskListDto: UpdateTaskListDto): Promise<TaskListEntity> {
