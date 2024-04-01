@@ -1,20 +1,28 @@
 # React-App
 Personal Project Management Tool
 
-Run:
->npm i
+# Run app locally
+>Run at the root:
 
-You can start both the frontend and backend projects from the root of your project using the defined scripts:
+npm i 
 
->npm run start:frontend
+>Create .env file to connect to your PostgreSql database and run migrations. (Check .env.example both in Backend and Frontend)
 
->npm run start:backend
+cd backend
+
+npm run typeorm migration:run -- -d ./src/utils/database-config/connection-config.ts
+
+>You can start both the frontend and backend projects from the root of your project using the defined scripts.
+
+npm run start:frontend
+
+
+npm run start:backend
 
 # Creating a new migration cd backend
 $ npm run typeorm migration:create ./src/migrations/name-of-the-migration-file
 
-# Running migrations
-$ npm run typeorm migration:run -- -d ./src/utils/database-config/connection-config.ts
+
 
 # Reverting migrations
 $ npm run typeorm migration:revert -- -d ./src/utils/database-config/connection-config.ts
