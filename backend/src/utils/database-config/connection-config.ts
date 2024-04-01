@@ -14,5 +14,5 @@ export const connectionSource = new DataSource({
   ssl: false,
     entities: ['src/modules/**/*.entity.ts'],
     migrationsTableName: 'migration',
-    migrations: ['src/migrations/*.ts', 'src/migrations/*.js'],
+    migrations: ['src/migrations/*.ts'],
 });

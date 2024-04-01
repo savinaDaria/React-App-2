@@ -13,7 +13,7 @@ export function getTypeOrmConfig(config: ConfigService): TypeOrmModuleOptions {
     database: config.get('POSTGRES_DATABASE'),
     entities: ['src/modules/**/*.entity.js'],
     migrationsTableName: 'migration',
-    migrations: ['src/migrations/*.js','src/migrations/*.ts'],
+    migrations: ['src/migrations/*.js'],
     autoLoadEntities: true,
     ssl: false
   };
