@@ -23,7 +23,7 @@ const getTask = createAsyncThunk<
                 _type: 'rejected',
                 error,
             });
-            return null;
+            throw error;
         }
     },
 );
@@ -44,7 +44,7 @@ const createTask = createAsyncThunk<
                 _type: 'rejected',
                 error,
             });
-            return null;
+            throw error;
         }
     },
 );
@@ -66,7 +66,7 @@ const updateTask = createAsyncThunk<
                 _type: 'rejected',
                 error,
             });
-            return null;
+            throw error;
         }
     },
 );
@@ -87,7 +87,7 @@ async (payload, { extra, rejectWithValue }) => {
             _type: 'rejected',
             error,
         });
-        return null;
+        throw error;
     }
 },
 );

@@ -1,4 +1,4 @@
-import { TextareaAutosize } from '@mui/material';
+import { FormControl, FormHelperText, TextareaAutosize } from '@mui/material';
 import {
     type Control,
     type FieldErrors,
@@ -37,14 +37,23 @@ const Textarea = <T extends FieldValues>({
         styles.textarea,
         hasError && styles.hasError,
     );
+    const helperTextStyles = getValidClassNames(
+        styles.helperText,
+        hasError && styles.hasError,
+    );
 
     return (
-        <TextareaAutosize
-            {...field}
-            className={getValidClassNames(textareaStyles, className)}
-            placeholder={placeholder}
-            {...props}
-        />
+        <FormControl className={className}>
+            <TextareaAutosize
+                {...field}
+                className={getValidClassNames(textareaStyles)}
+                placeholder={placeholder}
+                {...props}
+            />
+            {error && (
+                <FormHelperText className={helperTextStyles}>{error as unknown as string}</FormHelperText>
+            )}
+        </FormControl>
     );
 };
 

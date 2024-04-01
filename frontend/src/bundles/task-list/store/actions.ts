@@ -22,7 +22,7 @@ const getLists = createAsyncThunk<
                 _type: 'rejected',
                 error,
             });
-            return null;
+            throw error;
         }
     },
 );
@@ -43,7 +43,7 @@ const createList = createAsyncThunk<
                 _type: 'rejected',
                 error,
             });
-            return null;
+            throw error;
         }
     },
 );
@@ -65,7 +65,7 @@ const updateList = createAsyncThunk<
                 _type: 'rejected',
                 error,
             });
-            return null;
+            throw error;
         }
     },
 );
@@ -86,7 +86,7 @@ const deleteList = createAsyncThunk<
                 _type: 'rejected',
                 error,
             });
-            return null;
+           throw error;
         }
     },
 );

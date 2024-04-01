@@ -20,7 +20,7 @@ const getAllLogs = createAsyncThunk<
                 _type: 'rejected',
                 error,
             });
-            return null;
+            throw error;
         }
     },
 );
@@ -41,7 +41,7 @@ const getTaskLogs = createAsyncThunk<
                 _type: 'rejected',
                 error,
             });
-            return null;
+            throw error;
         }
     },
 );

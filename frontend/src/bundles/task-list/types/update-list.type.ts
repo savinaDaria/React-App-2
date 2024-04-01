@@ -1,8 +1,10 @@
 import { type CreateListRequest, type CreateListResponse } from './create-list.type';
 
-type UpdateListRequest = Partial<CreateListRequest> &
+type UpdateListForm= Partial<CreateListRequest> ;
+
+type UpdateListRequest = UpdateListForm &
 {
     id:number;
 };
 
-export { type UpdateListRequest, type CreateListResponse as UpdateListResponse };
+export {type UpdateListForm, type UpdateListRequest, type CreateListResponse as UpdateListResponse };

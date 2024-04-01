@@ -5,7 +5,6 @@ import {
     type FieldErrors,
     type FieldPath,
     type FieldValues,
-    type RefCallBack,
 } from 'react-hook-form';
 
 import {
@@ -31,7 +30,6 @@ type Properties<T extends FieldValues> = {
     inputClassNames?: string;
     defaultValue?: string;
     endAdornment?: JSX.Element;
-    inputRef?: RefCallBack;
 } & TextFieldProps;
 
 const Input = <T extends FieldValues>({
@@ -124,7 +122,7 @@ const Input = <T extends FieldValues>({
                 disabled: isDisabled,
                 startAdornment: adornment,
                 endAdornment: endAdornment && endAdornmentElement,
-                ref: inputRef,
+                //ref: inputRef,
             }}
             inputProps={{
                 className: htmlInputStyles,

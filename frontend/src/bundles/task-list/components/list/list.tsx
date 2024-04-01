@@ -1,7 +1,7 @@
 import styles from './styles.module.scss';
 import { TaskCard } from "~/bundles/task-card/components/task-card/task";
 import { MoreVert as MoreVertIcon, Add as AddIcon } from '@mui/icons-material';
-import { Button, Dropdown, Grid, MenuButton, Typography } from '~/bundles/common/components/components';
+import { Button, Dropdown, Grid,  MenuButton, Typography } from '~/bundles/common/components/components';
 import { ListMenu } from '../list-menu/list-menu';
 import { type List } from '../../types/list.type';
 import { DeleteListRequest } from '../../types/delete-list.type';
@@ -12,12 +12,13 @@ import { getValidClassNames } from '~/bundles/common/helpers/helpers';
 import { taskActions } from '~/bundles/task-card/store/slice';
 import { CreateTaskRequest } from '~/bundles/task-card/types/create-task.type';
 import { DeleteTaskRequest } from '~/bundles/task-card/types/delete-task.type';
-// import { UpdateTaskRequest } from '../task-card/types/update-task.type';
 import { GetTaskRequest } from '~/bundles/task-card/types/get-task.type';
 import { DEFAULT_TASK_PAYLOAD } from '~/bundles/task-card/constants/default.constants';
 import { RootState } from '~/framework/store/store';
 import { MoveTaskRequest } from '~/bundles/task-card/types/move-task.type';
 import { taskListActions } from '../../store/slice';
+import { ListEditValidationSchema } from '../../validation-schemas/validation-schemas';
+import { notification } from '~/framework/services/services';
 
 type Properties = {
     taskList: List;
@@ -25,6 +26,7 @@ type Properties = {
     onListDelete: ({ id }: DeleteListRequest) => void;
 };
 const getListsState = (state: RootState) => state.taskLists;
+
 const TaskList: React.FC<Properties> = ({
     taskList,
     onListUpdate,
@@ -37,7 +39,6 @@ const TaskList: React.FC<Properties> = ({
     const lists = useSelector(
         (rootState) => getListsState(rootState).taskLists,
     );
-
     const moveToOptions = lists.filter(list => list.id !== taskList.id).map(list => ({
         label: list.name,
         value: list.id,
@@ -49,14 +50,22 @@ const TaskList: React.FC<Properties> = ({
     const handleInputNameFocus = useCallback(() => {
         setIsEditInputActive(true);
     }, []);
+
     const handleInputNameBlur = useCallback(() => {
-        const updatePayload = {
-            id: taskList.id,
-            name: editedName
-        };
-        onListUpdate(updatePayload);
+        const { error } = ListEditValidationSchema.validate({name: editedName});
+        if (!error) {
+            const updatePayload = {
+                id: taskList.id,
+                name: editedName
+            };
+            onListUpdate(updatePayload);
+        }
+        else{
+            setEditedName(taskList.name)
+            notification.ERROR(error.message);
+        }
         setIsEditInputActive(false);
-    }, [editedName, onListUpdate, taskList.id]);
+    }, [editedName,onListUpdate, taskList.id]);
 
     const dispatch = useDispatch();
 

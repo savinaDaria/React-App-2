@@ -8,6 +8,7 @@ import { CreateListRequest } from '~/bundles/task-list/types/create-list.type';
 import { UpdateListRequest } from '~/bundles/task-list/types/update-list.type';
 import { RootState } from '~/framework/store/store';
 import { logActions } from '~/bundles/history-modal/store/slice';
+import { Notifications } from '~/bundles/common/components/components';
 
 const getListsState = (state: RootState) => state.taskLists;
 
@@ -45,6 +46,7 @@ const TaskBoard: React.FC = () => {
 
     return (
         <div>
+            <Notifications />
             <BoardHeader 
             onCreateList={handleCreateList}
             onHistoryOpen={handleGetLogs} />

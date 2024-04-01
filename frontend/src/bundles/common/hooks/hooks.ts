@@ -9,7 +9,6 @@ export {
     useState,
 } from 'react';
 export {
-    useForm,
     useFieldArray,
     useController as useFormController,
 } from 'react-hook-form';
@@ -18,3 +17,4 @@ export {
     useNavigate,
     useParams as useParameters,
 } from 'react-router-dom';
+export { useAppForm as useForm } from './use-app-form.hook';

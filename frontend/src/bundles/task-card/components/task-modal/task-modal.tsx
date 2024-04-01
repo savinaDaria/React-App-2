@@ -1,7 +1,7 @@
 import { Button, Calendar, Input, Loader, Modal, Typography, Select } from '~/bundles/common/components/components';
 import styles from './styles.module.scss';
 import { Divider } from '@mui/material';
-import { useCallback, useState, useForm, useDispatch } from '~/bundles/common/hooks/hooks';
+import { useCallback, useState, useForm, useDispatch, useEffect } from '~/bundles/common/hooks/hooks';
 import {
     CloseRounded as CloseRoundedIcon,
     Cancel as CancelIcon,
@@ -19,6 +19,7 @@ import { Task } from '../../types/task.type';
 import { TaskPriority } from '~/bundles/common/enums/enums';
 import dayjs from 'dayjs';
 import { DataStatus } from '~/framework/enums/data-status.enum';
+import { TaskEditValidationSchema } from '../../validation-schemas/validation-schemas';
 
 type MenuItemOption = {
     label: string;
@@ -36,8 +37,8 @@ type FormInputs = {
     description: string | null,
     listId: number,
     priority: typeof TaskPriority[keyof typeof TaskPriority],
-    dueDate: dayjs.Dayjs | null,
-    [key: string]: string | number | typeof TaskPriority[keyof typeof TaskPriority] | dayjs.Dayjs | null;
+    dueDate?: string,
+    [key: string]: string | number | typeof TaskPriority[keyof typeof TaskPriority] | dayjs.Dayjs | null |undefined;
 
 }
 
@@ -57,23 +58,24 @@ const TaskModal: React.FC<Properties> = ({
         priority: task.priority,
         description: task.description,
         listId: task.listId,
-        dueDate: dayjs(task.dueDate),
-        status: task.name
+        dueDate: task.dueDate
     };
     const {
         control,
+        handleSubmit,
         getValues,
-        formState,
+        errors,
     } = useForm<FormInputs>(
         {
-            defaultValues: initialState
+            defaultValues: initialState,
+            validationSchema: TaskEditValidationSchema
         }
     );
 
     const handleEditMode = useCallback(() => {
         setIsEditMode(!isEditMode);
     }, [isEditMode]);
-
+    
     const handleTaskUpdateSave = useCallback(() => {
         const allFormValues = getValues();
         const updatePayload: Partial<FormInputs> = {};
@@ -85,8 +87,8 @@ const TaskModal: React.FC<Properties> = ({
                 allFormValues[key as keyof FormInputs] !== initialState[key]
             ) {
                 if (key === 'dueDate' && allFormValues.dueDate && initialState.dueDate) {
-                    const newValue = formatTime(allFormValues.dueDate.toISOString());
-                    const initialValue= formatTime(initialState.dueDate.toISOString());
+                    const newValue = formatTime(allFormValues.dueDate);
+                    const initialValue= formatTime(initialState.dueDate);
                     if (newValue !== initialValue) 
                     updatePayload[key as keyof FormInputs] = allFormValues[key as keyof FormInputs];
                 }
@@ -99,18 +101,25 @@ const TaskModal: React.FC<Properties> = ({
         const { dueDate, ...rest } = updatePayload;
         dispatch(taskActions.updateTask({
             id: task.id,
-            dueDate: dueDate ? formatTime(dueDate.toISOString()) :undefined,
+            dueDate: dueDate ? formatTime(dueDate) :undefined,
             ...rest
         }));
         setIsEditMode(false);
     }, []);
+
+    const handleFormSubmit = useCallback(
+        (event_: React.BaseSyntheticEvent): void => {
+            void handleSubmit(handleTaskUpdateSave)(event_);
+        },
+        [handleSubmit,handleTaskUpdateSave],
+    );
     return (
         <Modal
             open={isOpen}
             onClose={onClose}
             className={styles.modal}
         >
-            <div className={styles.modalContent}>
+            <form className={styles.modalContent} onSubmit={handleFormSubmit}>
                 <div className={styles.modalHeader}>
                     <div className={styles.closeButtonWrapper}>
                         <Button
@@ -133,7 +142,7 @@ const TaskModal: React.FC<Properties> = ({
                                     <Input
                                         className={styles.inputName}
                                         control={control}
-                                        errors={formState.errors}
+                                        errors={errors}
                                         placeholder="Task name"
                                         name="name"
                                     />
@@ -144,8 +153,8 @@ const TaskModal: React.FC<Properties> = ({
                                     ?
                                     <div className={styles.buttons}>
                                         <Button
+                                        type='submit'
                                             startIcon={<SaveIcon />}
-                                            onClick={handleTaskUpdateSave}
                                             className={styles.editBtn}
                                         >Save task</Button>
                                         <Button
@@ -176,6 +185,7 @@ const TaskModal: React.FC<Properties> = ({
                                                 <Select
                                                     isDisabled={!Boolean(moveToOptions.length)}
                                                     control={control}
+                                                    errors={errors}
                                                     name={'listId'}
                                                     options={moveToOptions}
                                                     startAdornmentText={"Move to"} />
@@ -192,7 +202,7 @@ const TaskModal: React.FC<Properties> = ({
                                             {isEditMode
                                                 ?
                                                 <Calendar
-                                                    control={control}
+                                                    control={control}                                                  
                                                     className={styles.input}
                                                     name={'dueDate'} />
                                                 :
@@ -230,7 +240,7 @@ const TaskModal: React.FC<Properties> = ({
                                             minRows={7}
                                             maxRows={100}
                                             control={control}
-                                            errors={formState.errors}
+                                            errors={errors}
                                             className={styles.textInput}
                                             placeholder="Text"
                                             name={'description'}
@@ -247,7 +257,7 @@ const TaskModal: React.FC<Properties> = ({
                         <Loader />
                     </div>
                 }
-            </div>
+            </form>
         </Modal >
     );
 };

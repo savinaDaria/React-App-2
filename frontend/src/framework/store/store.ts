@@ -8,7 +8,8 @@ import { reducer as logsReducer } from '~/bundles/history-modal/store/slice';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 import { TaskApiService } from '~/bundles/task-card/api/task-api';
 import { ActivityLogService } from '~/bundles/history-modal/api/log-api';
-
+import { notification } from '../services/services';
+import { errorHandler } from './middlewares/error-handler.middleware';
 type RootReducer = {
     taskLists: typeof taskListReducer,
     task: typeof taskReducer,
@@ -20,7 +21,8 @@ const SERVER_URL=import.meta.env.VITE_APP_PROXY_SERVER_URL;
 const ExtraArguments = {
     listApi: new TaskListApiService(SERVER_URL),
     taskApi: new TaskApiService(SERVER_URL),
-    activityLogApi: new ActivityLogService(SERVER_URL)
+    activityLogApi: new ActivityLogService(SERVER_URL),
+    notification: notification
 };
 
 const store = configureStore({
@@ -35,7 +37,7 @@ const store = configureStore({
             thunk: {
                 extraArgument: ExtraArguments,
             },
-        }),
+        }).concat(errorHandler)
 });
 
 type RootState = ReturnType<typeof store.getState>;
