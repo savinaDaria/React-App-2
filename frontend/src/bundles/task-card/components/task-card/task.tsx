@@ -54,17 +54,17 @@ const TaskCard: React.FC<TaskCardProps> = ({
   useEffect(() => {
     if (typeof listId === 'number')
       onMoveTask({ id: task.id, listId });
-  }, [listId]);
+  }, [listId, onMoveTask, task.id]);
 
   const handleModalClose = useCallback(() => {
     setisModalOpen(false);
     onTaskClose();
-  }, []);
+  }, [onTaskClose]);
 
   const handleModalOpen = useCallback(() => {
     onTaskView({ id: task.id });
     setisModalOpen(true);
-  }, []);
+  }, [onTaskView, task.id]);
 
 
   return (
@@ -90,7 +90,7 @@ const TaskCard: React.FC<TaskCardProps> = ({
         label={task.priority}
         icon={<FiberManualRecordIcon fontSize='small' className={styles[task.priority.toLowerCase()]} />} />
       <Select
-      isDisabled={!Boolean(moveToOptions.length)}
+      isDisabled={!moveToOptions.length}
         control={control}
         name={'listId'}
         options={moveToOptions}

@@ -122,7 +122,7 @@ const Input = <T extends FieldValues>({
                 disabled: isDisabled,
                 startAdornment: adornment,
                 endAdornment: endAdornment && endAdornmentElement,
-                //ref: inputRef,
+                ref: inputRef,
             }}
             inputProps={{
                 className: htmlInputStyles,

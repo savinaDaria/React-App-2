@@ -1,5 +1,5 @@
 export const formatTime = (date: string) => {
-    let dateFormatted = new Date(date);
+    const dateFormatted = new Date(date);
 
     dateFormatted.setHours(0);
     dateFormatted.setMinutes(0);

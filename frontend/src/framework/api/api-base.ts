@@ -5,7 +5,7 @@ class HttpApiBase {
         this.baseUrl = baseUrl;
     }
 
-    private async request<T>(endpoint: string, method: string, data: any = null): Promise<T> {
+    private async request<T>(endpoint: string, method: string, data: unknown = null): Promise<T> {
         const config: RequestInit = {
             method: method,
             headers: {
@@ -31,7 +31,7 @@ class HttpApiBase {
         }
     }
 
-    private handleError(error: any): void {
+    private handleError(error: unknown): void {
         console.error('API Service Error:', error);
     }
 
@@ -39,14 +39,14 @@ class HttpApiBase {
         return this.request<T>(endpoint, 'GET');
     }
 
-    protected async post<T>(endpoint: string, data: any): Promise<T> {
+    protected async post<T>(endpoint: string, data: unknown): Promise<T> {
         return this.request<T>(endpoint, 'POST', data);
     }
 
     protected async delete<T>(endpoint: string): Promise<T> {
         return this.request<T>(endpoint, 'DELETE');
     }
-    protected async update<T>(endpoint: string, data: any): Promise<T> {
+    protected async update<T>(endpoint: string, data: unknown): Promise<T> {
         return this.request<T>(endpoint, 'PATCH', data);
     }
 }

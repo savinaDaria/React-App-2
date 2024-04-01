@@ -65,7 +65,7 @@ const TaskList: React.FC<Properties> = ({
             notification.ERROR(error.message);
         }
         setIsEditInputActive(false);
-    }, [editedName,onListUpdate, taskList.id]);
+    }, [editedName, onListUpdate, taskList.id, taskList.name]);
 
     const dispatch = useDispatch();
 

@@ -1,7 +1,7 @@
 import { Button, Calendar, Input, Loader, Modal, Typography, Select } from '~/bundles/common/components/components';
 import styles from './styles.module.scss';
 import { Divider } from '@mui/material';
-import { useCallback, useState, useForm, useDispatch, useEffect } from '~/bundles/common/hooks/hooks';
+import { useCallback, useState, useForm, useDispatch, useMemo } from '~/bundles/common/hooks/hooks';
 import {
     CloseRounded as CloseRoundedIcon,
     Cancel as CancelIcon,
@@ -38,7 +38,7 @@ type FormInputs = {
     listId: number,
     priority: typeof TaskPriority[keyof typeof TaskPriority],
     dueDate?: string,
-    [key: string]: string | number | typeof TaskPriority[keyof typeof TaskPriority] | dayjs.Dayjs | null |undefined;
+    [key: string]: string | number | typeof TaskPriority[keyof typeof TaskPriority] | dayjs.Dayjs | null | undefined;
 
 }
 
@@ -53,13 +53,13 @@ const TaskModal: React.FC<Properties> = ({
     const [isEditMode, setIsEditMode] = useState(false);
     const dispatch = useDispatch();
 
-    const initialState: FormInputs = {
+    const initialState: FormInputs = useMemo(()=>({
         name: task.name,
         priority: task.priority,
         description: task.description,
         listId: task.listId,
         dueDate: task.dueDate
-    };
+    }), [task.description, task.dueDate, task.listId, task.name, task.priority]);
     const {
         control,
         handleSubmit,
@@ -75,7 +75,7 @@ const TaskModal: React.FC<Properties> = ({
     const handleEditMode = useCallback(() => {
         setIsEditMode(!isEditMode);
     }, [isEditMode]);
-    
+
     const handleTaskUpdateSave = useCallback(() => {
         const allFormValues = getValues();
         const updatePayload: Partial<FormInputs> = {};
@@ -88,9 +88,9 @@ const TaskModal: React.FC<Properties> = ({
             ) {
                 if (key === 'dueDate' && allFormValues.dueDate && initialState.dueDate) {
                     const newValue = formatTime(allFormValues.dueDate);
-                    const initialValue= formatTime(initialState.dueDate);
-                    if (newValue !== initialValue) 
-                    updatePayload[key as keyof FormInputs] = allFormValues[key as keyof FormInputs];
+                    const initialValue = formatTime(initialState.dueDate);
+                    if (newValue !== initialValue)
+                        updatePayload[key as keyof FormInputs] = allFormValues[key as keyof FormInputs];
                 }
                 else {
 
@@ -101,17 +101,17 @@ const TaskModal: React.FC<Properties> = ({
         const { dueDate, ...rest } = updatePayload;
         dispatch(taskActions.updateTask({
             id: task.id,
-            dueDate: dueDate ? formatTime(dueDate) :undefined,
+            dueDate: dueDate ? formatTime(dueDate) : undefined,
             ...rest
         }));
         setIsEditMode(false);
-    }, []);
+    }, [dispatch, getValues, initialState, task.id]);
 
     const handleFormSubmit = useCallback(
         (event_: React.BaseSyntheticEvent): void => {
             void handleSubmit(handleTaskUpdateSave)(event_);
         },
-        [handleSubmit,handleTaskUpdateSave],
+        [handleSubmit, handleTaskUpdateSave],
     );
     return (
         <Modal
@@ -153,7 +153,7 @@ const TaskModal: React.FC<Properties> = ({
                                     ?
                                     <div className={styles.buttons}>
                                         <Button
-                                        type='submit'
+                                            type='submit'
                                             startIcon={<SaveIcon />}
                                             className={styles.editBtn}
                                         >Save task</Button>
@@ -183,7 +183,7 @@ const TaskModal: React.FC<Properties> = ({
                                             {isEditMode
                                                 ?
                                                 <Select
-                                                    isDisabled={!Boolean(moveToOptions.length)}
+                                                    isDisabled={!moveToOptions.length}
                                                     control={control}
                                                     errors={errors}
                                                     name={'listId'}
@@ -202,7 +202,7 @@ const TaskModal: React.FC<Properties> = ({
                                             {isEditMode
                                                 ?
                                                 <Calendar
-                                                    control={control}                                                  
+                                                    control={control}
                                                     className={styles.input}
                                                     name={'dueDate'} />
                                                 :

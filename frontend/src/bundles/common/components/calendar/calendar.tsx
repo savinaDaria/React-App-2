@@ -19,8 +19,8 @@ const Calendar = <T extends FieldValues>({
   const { field } = useFormController({ name, control });
   const { onChange, value } = field;
 
-  const handleDateChange = (date: any) => {
-    onChange(date.toISOString())
+  const handleDateChange = (value: dayjs.Dayjs | null)=> {
+    onChange(value?.toISOString() ?? '')
   };
   return (
     <LocalizationProvider dateAdapter={AdapterDayjs}>

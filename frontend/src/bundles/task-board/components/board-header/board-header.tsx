@@ -20,7 +20,7 @@ const BoardHeader: React.FC<Properties> = ({ onCreateList, onHistoryOpen }) => {
   const handleHistoryModalOpen = useCallback(() => {       
     onHistoryOpen();
     setisHistoryModalOpen(true); 
-  }, []);
+  }, [onHistoryOpen]);
 
   const handleListCreate = useCallback(
     () => onCreateList(DEFAULT_TASK_LIST_PAYLOAD),
