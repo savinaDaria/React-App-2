@@ -5,7 +5,6 @@ import { getTypeOrmConfig } from '~/utils/database-config/typeorm.config';
 import { TaskModule } from '~/modules/task/task.module';
 import { TaskListModule } from '~/modules/task-list/task-list.module';
 import { ActivityLogModule } from '~/modules/activity-log/activity-log.module';
-import { MigrationManagerService } from '~/utils/migration-manager/migration-manager.service';
 
 @Module({
   imports: [
@@ -21,6 +20,6 @@ import { MigrationManagerService } from '~/utils/migration-manager/migration-man
    TaskListModule
   ],
   controllers: [],
-  providers: [MigrationManagerService],
+  providers: [],
 })
 export class AppModule {}
