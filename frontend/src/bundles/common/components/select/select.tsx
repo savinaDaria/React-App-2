@@ -79,6 +79,7 @@ const Select = <T extends FieldValues>({
         <FormControl className={styles.container} isDisabled={isDisabled}>
             {label && <FormLabel>{label}</FormLabel>}
             <MuiSelect
+                disabled={isDisabled}
                 {...field}
                 displayEmpty
                 multiple={isMulti}

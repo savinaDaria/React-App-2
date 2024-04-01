@@ -1,11 +1,27 @@
-
 @import url('./variables.scss');
 
 body {
   font-family: Arial, sans-serif;
-  font-size: var(--font-size-btn);
+  font-size: var(--font-size-standard);
   margin: 10px 40px;
   padding: 0;
-  background-color: var(--white);  
+  background-color: var(--white);
   overflow: hidden;
+}
+
+.title {
+  text-shadow: 0 1px 1px rgb(193, 193, 193);
+  letter-spacing: 0.5px;
+  font-size: var(--font-size-h3);
+}
+
+@media screen and (width <=660px) {
+  body {
+    font-size: var(--font-size-smaller);
+    margin: 5px 30px;
+  }
+
+  .title {
+    font-size: var(--font-size-h4);
+  }
 }

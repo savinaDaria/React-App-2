@@ -1,18 +1,18 @@
-const Action = {
+export const Action = {
     Add: 'Add',
     Delete: 'Delete',
     Update: 'Change'
-};
+} as const;
 
-const Property = {
+export const Property = {
     Name: 'name',
     Priority: 'priority',
     ListId: 'listId',
     Description: 'description',
     DueDate: 'dueDate'
-};
+} as const;
 
-const FormattedAction = {
+export const FormattedAction = {
     Add: 'added',
     Delete: 'deleted',
     ChangeName: 'renamed',
@@ -20,7 +20,7 @@ const FormattedAction = {
     ChangeDescription: 'changed description of',
     ChangePriority: 'changed priority of',
     ChangeDueDate: 'changed due date of'
-};
+} as const;
 
 export function mapHistoryActivity(actionType: string, property: string|null):string {
     let mappedActionName = actionType;

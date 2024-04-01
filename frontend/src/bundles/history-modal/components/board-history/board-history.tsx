@@ -7,6 +7,7 @@ import { useSelector } from '~/bundles/common/hooks/hooks';
 import { RootState } from '~/framework/store/store';
 import { DataStatus } from '~/framework/enums/data-status.enum';
 import { formatDateTime, mapHistoryActivity } from '~/bundles/common/helpers/helpers';
+import { Property } from '~/bundles/common/helpers/map-history-activity.helper';
 
 type Properties = {
     isOpen: boolean;
@@ -42,19 +43,29 @@ const HistoryModal: React.FC<Properties> = ({
                 <Divider />
                 {dataStatus === DataStatus.PENDING
                     ?
-                    <Loader />
+                    <div className={styles.modalContainer}>
+                        <Loader />
+                    </div>
                     :
                     (<div className={styles.modalContainer}>
                         <ul>
-                            {logs.map(activityLog => (
-                                <HistoryRow
-                                    key={activityLog.id}
-                                    actionName={mapHistoryActivity(activityLog.actionType,activityLog.property)}
-                                    taskName={activityLog.task.name ?? 'a'}
-                                    newValue={activityLog.newValue ?? undefined}
-                                    oldValue={activityLog.oldValue ?? undefined}
-                                    date={formatDateTime(activityLog.dateCreated,'DateTime')} />
-                            ))}
+                            {logs.map(activityLog => {
+                                let newValue = activityLog.newValue ?? undefined;
+                                let oldValue = activityLog.oldValue ?? undefined;
+                                if (newValue && oldValue && activityLog.property === Property.DueDate) {
+                                    newValue = formatDateTime(newValue, 'Date');
+                                    oldValue = formatDateTime(oldValue, 'Date');
+                                }
+                                return (
+                                    <HistoryRow
+                                        key={activityLog.id}
+                                        actionName={mapHistoryActivity(activityLog.actionType, activityLog.property)}
+                                        taskName={activityLog.task.name}
+                                        newValue={newValue}
+                                        oldValue={oldValue}
+                                        date={formatDateTime(activityLog.dateCreated, 'DateTime')} />
+                                )
+                            })}
                         </ul>
                     </div>)}
 

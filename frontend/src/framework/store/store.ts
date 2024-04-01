@@ -15,10 +15,12 @@ type RootReducer = {
     logs: typeof logsReducer
 };
 
+const SERVER_URL=import.meta.env.VITE_APP_PROXY_SERVER_URL;
+
 const ExtraArguments = {
-    listApi: new TaskListApiService(import.meta.env.VITE_APP_PROXY_SERVER_URL),
-    taskApi: new TaskApiService(import.meta.env.VITE_APP_PROXY_SERVER_URL),
-    activityLogApi: new ActivityLogService(import.meta.env.VITE_APP_PROXY_SERVER_URL)
+    listApi: new TaskListApiService(SERVER_URL),
+    taskApi: new TaskApiService(SERVER_URL),
+    activityLogApi: new ActivityLogService(SERVER_URL)
 };
 
 const store = configureStore({

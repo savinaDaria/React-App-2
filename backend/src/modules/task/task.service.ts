@@ -18,7 +18,7 @@ export class TaskService {
     ) { }
 
     async getAllTasks(): Promise<TaskEntity[]> {
-        return this.tasksRepository.find();
+        return this.tasksRepository.find({order: { dateCreated: 'ASC' } });
     }
 
     async getTaskById(id: number): Promise<TaskEntity> {
@@ -72,13 +72,14 @@ export class TaskService {
                     oldValue = oldValues.list.name;
                 }
                 else {
-                    newValue = typeof updateTaskDto[prop] == 'string' ? updateTaskDto[prop] : JSON.stringify(updateTaskDto[prop]);
-                    oldValue = typeof oldValues[prop] == 'string' ? oldValues[prop] : JSON.stringify(oldValues[prop]);
+                    newValue = typeof updateTaskDto[prop] == 'string' ? updateTaskDto[prop] : updateTaskDto[prop];
+                    oldValue = typeof oldValues[prop] == 'string' ? oldValues[prop] : oldValues[prop];
                 }
                 await this.logActivity(ActivityTypeBasic.UPDATE, oldValues.id, oldValue, newValue, prop);
             }
         }
-        return newTask;
+
+        return await this.getTaskById(id);
     }
 
     private async logActivity(

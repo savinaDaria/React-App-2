@@ -1,246 +1,28 @@
-.modalContent {
-    display: flex;
-    flex-direction: column;
-    background-color: var(--white);
-    max-width: 400px;
-    position: fixed;
-    top:0;
-    right: 0;
-    bottom: 0;
-}
-.modalContainer{ 
-    padding: 10px 20px ;
-    max-height: 100vh;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--gray-1) transparent; 
-}
-.modalHeader {
-    display: flex;
-    flex-shrink: 0;
-    font-weight: 800;
-    justify-content: space-between;
-    background-color: var(--st-tropaz);
-    align-items: center;
-    padding-left: 20px;
-    color:var(--white);
-}
-
-.iconButton {
-    width: 35px;
-    min-width: 0;
-    height: 100%;
-    border: none;
-
-    &:hover {
-        border: none;
-    }
-
-    .closeIcon {
-        margin-right: 11px;
-        color: var(--nepal);
-        font-size: var(--font-size-h4);
-    }
-}
-
-.closeButtonWrapper {
-    display: flex;
-    align-items: center;
-    height: 32px;
-    margin: 12px 10px 17px 0;
-}
-
-.modalContainer li {
-    margin-bottom: 25px;
-    line-height: 1.5;
-    font-size: 14px;
-    color:var(--st-tropaz)
-}
-
-.taskSpan {
-    font-weight: bold;
-    color: var(--steel-gray);
-}
-
-.dateSpan {
-    display: block;
-    color: #757575;
-    font-size: 12px;
-    margin-top: 5px;
-    font-style: italic;
-}
-
-.valueSpan{
-    font-weight: bolder; 
-}
-
-.circleIcon{
-    font-size: 15px;
-}
-
-
-.modalContent {
-    display: flex;
-    margin: 80px 40px;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    max-width: 100%;
-}
-
-.modalContainer {
-    background-color: var(--white);
-    display: flex;
-    flex-direction: row;
-    max-height: 70vh;
-    width: 100%;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-}
-
-.modalHeader {
-    display: flex;
-    width: 100%;
-    flex-shrink: 0;
-    font-weight: 800;
-    justify-content: flex-end;
-    background-color: var(--st-tropaz);
-    align-items: center;
-    color: var(--white);
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-}
-
-.iconButton {
-    width: 35px;
-    min-width: 0;
-    height: 100%;
-    border: none;
-
-    &:hover {
-        border: none;
-    }
-
-    .closeIcon {
-        margin-right: 11px;
-        color: var(--nepal);
-        font-size: var(--font-size-h4);
-    }
-}
-
-.closeButtonWrapper {
-    display: flex;
-    align-items: center;
-    height: 32px;
-    margin: 12px 10px 17px 0;
-}
-
-.modalContainer li {
-    margin-bottom: 25px;
-    line-height: 1.5;
-    font-size: 14px;
-    color: var(--st-tropaz)
-}
-
-.taskSpan {
-    font-weight: bold;
-    color: var(--steel-gray);
-}
-
-.dateSpan {
-    display: block;
-    color: #757575;
-    font-size: 12px;
-    margin-top: 5px;
-    font-style: italic;
-}
-
-.valueSpan {
-    font-weight: bolder;
-}
-
-.circleIcon {
-    font-size: 15px;
-}
-
-.taskProperties {
-    font-family: Arial, sans-serif;
-    color: #333;
-}
-
-.infoItem {
-    display: flex;
-    align-items: center;
-    justify-content: start;
-    margin-bottom: 5px;
-}
-
-.icon {
-    font-size: 16px;
-    /* Adjust size as needed */
-    margin-right: 8px;
-}
-
-.text {
-    display: flex;
-    flex-wrap: wrap;
-    flex-grow: 1;
-    align-items: center;
-}
-
-.text .label {
-    flex-basis: 30%;
-    font-size: 14px;
-    color: #666;
-}
-
-.text .value {
-    flex-basis:70%;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.taskData {
-    width:70%;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    gap: 20px;
-    padding: 40px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--gray-1) transparent;
-}
-
-.taskHeader {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    position: sticky;
-    top:0;
-}
-
-.editBtn {
-    cursor: pointer;
-    text-transform: none;
-    padding: 7px 20px;
-    background-color: var(--white-lilac);
-    color: var(--text-primary-dark);
-    border: 1px solid var(--cloudy-sky);
-    box-shadow: none;
-
-    &:hover {
-        background-color: var(--slate-gray);
-        color: var(--white-lilac);
-    }
-}
 
 .taskHistory {
+    width: 40%;
     background-color: var(--cloudy-sky);
-    padding: 40px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    border-bottom-right-radius: 10px;
+    padding: 40px 20px;
+}
+
+.typography{
+    position: sticky;
+    top: 0;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.historyContainer{
+    // width: 40%;
+    background-color: var(--cloudy-sky);
+    padding: 20px;
     overflow-y: auto;
     scrollbar-width: thin;
-    scrollbar-color: var(--gray-1) transparent;
+    scrollbar-color: var(--gray-2) transparent;
     border-bottom-right-radius: 10px;
 
     ul {
@@ -255,60 +37,14 @@
     }
 }
 
-.taskDescription {
-    width: 100%;
-    color: var(--gray-2);
-    line-height: 20px;
-    white-space: pre-line;
-    margin-bottom: 1em;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--gray-1) transparent;
-}
-
-.input{    
-    min-width: 240px;
-  }
-
-  .inputName{    
-    width: 30%;
-  }
-
-.buttons{
-    display: flex;
-}
-
-.textInput{
-    width:90%;
-}
-
-.typography{
-    font-size: 26px;
-    font-weight: bold;
-}
-
-.taskPropContainer{
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--gray-1) transparent;
-}
-
 @media screen and (width <=660px) {
 
     .typography{
         font-size: 16px;
     }
-    .modalContainer {
-        flex-direction: column;
-    }
-
     .taskHistory {
         padding: 20px;
         height:30vh;
-    }
-
-    .taskData{
-        width:auto;
-        padding: 10px;
+        width: auto;
     }
 }

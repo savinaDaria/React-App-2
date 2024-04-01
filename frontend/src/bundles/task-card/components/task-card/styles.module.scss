@@ -1,19 +1,18 @@
+:global(.MuiOutlinedInput-notchedOutline) {
+  border: 1px solid var(--gray-1);
+}
 
+:global(.Mui-focused .MuiOutlinedInput-notchedOutline) {
+  border: 2px solid var(--cloudy-sky-1) !important;
+}
 
-  :global(.MuiOutlinedInput-notchedOutline){
-    border: 1px solid var(--gray-1);
-  }
-  
-  :global(.Mui-focused .MuiOutlinedInput-notchedOutline){
-    border: 2px solid var(--cloudy-sky-1) !important;
-  }
-
-  :global(.MuiInputLabel-root.Mui-focused){
-    color:var(--steel-gray);
-   }
+:global(.MuiInputLabel-root.Mui-focused) {
+  color: var(--steel-gray);
+}
 
 .taskCard {
   padding: 10px;
+  max-width: 300px;
   border: 1px solid var(--gray-1);
   border-radius: 5px;
   display: flex;
@@ -21,10 +20,9 @@
   gap: 10px;
 }
 
-.taskTitle {
-  font-weight: bold;
-  text-shadow: 0 1px 1px rgb(128, 127, 127);
-  letter-spacing: 0.5px;
+.clickableTitle:hover {
+  cursor: pointer;
+  text-shadow: 1px 1px 1px rgb(132, 131, 131);
 }
 
 .cardHeader {
@@ -35,23 +33,22 @@
 
 .taskDescription {
   color: var(--gray-2);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
-.moveToSelect{
-  background-color:var(--cloudy-sky-1);
-  color:var(--steel-gray);
+.moveToSelect {
+  background-color: var(--cloudy-sky-1);
+  color: var(--steel-gray);
   font-weight: bold;
   font-size: small;
 }
 
-.dateRow{
+.dateRow {
   display: flex;
   align-items: center;
-  gap:5px;
-}
-
-.priority {
-  padding: 3px 8px;
+  gap: 5px;
 }
 
 :global(.MuiChip-icon) {
@@ -78,7 +75,8 @@
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.1);
-    padding: 1px;;
+    padding: 1px;
+    ;
     border-radius: 50%;
   }
 }

@@ -17,7 +17,7 @@ export class TaskListService {
   ) { }
 
   async getTaskLists(): Promise<TaskListEntity[]> {
-    const lists = await this.listRepository.find({ relations: ['tasks'] });
+    const lists = await this.listRepository.find({ relations: ['tasks'],order: { dateCreated: 'DESC' } },);
 
     return lists;
   }

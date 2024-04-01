@@ -1,9 +1,9 @@
-import { Typography as TypographyBase } from '@mui/material';
+import { Typography as TypographyBase, TypographyProps } from '@mui/material';
 
 import { type ColorProperty } from '~/bundles/common/enums/enums.js';
 import { type ValueOf } from '~/bundles/common/types/types.js';
 
-type Properties = {
+type Properties = TypographyProps & {
     children: React.ReactNode;
     variant:
         | 'h1'

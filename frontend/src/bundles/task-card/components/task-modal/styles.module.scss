@@ -100,7 +100,7 @@
     display: flex;
     align-items: center;
     justify-content: start;
-    margin-bottom: 5px;
+    margin-bottom: 20px;
 }
 
 .icon {
@@ -142,9 +142,10 @@
 
 .taskHeader {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     position: sticky;
+    gap:5px;
     top:0;
 }
 
@@ -162,27 +163,6 @@
         color: var(--white-lilac);
     }
 }
-
-.taskHistory {
-    background-color: var(--cloudy-sky);
-    padding: 40px;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: var(--gray-1) transparent;
-    border-bottom-right-radius: 10px;
-    width:20%;
-    ul {
-        padding: 0;
-    }
-
-    li {
-        margin-bottom: 25px;
-        line-height: 1.5;
-        font-size: 14px;
-        color: var(--st-tropaz)
-    }
-}
-
 .taskDescription {
     width: 100%;
     color: var(--gray-2);
@@ -199,11 +179,12 @@
   }
 
   .inputName{    
-    width: 30%;
+    width: 60%;
   }
 
 .buttons{
     display: flex;
+    gap:5px;
 }
 
 .textInput{
@@ -211,7 +192,7 @@
 }
 
 .typography{
-    font-size: 26px;
+    font-size: 22px;
     font-weight: bold;
 }
 
@@ -221,7 +202,7 @@
     scrollbar-color: var(--gray-1) transparent;
 }
 
-@media screen and (width <=660px) {
+@media screen and (width <=660px ) {
 
     .typography{
         font-size: 16px;
@@ -230,13 +211,18 @@
         flex-direction: column;
     }
 
-    .taskHistory {
-        padding: 20px;
-        height:30vh;
-    }
-
     .taskData{
         width:auto;
         padding: 10px;
+    }
+
+    // .taskHeader{
+    //     flex-direction: column;
+    // }
+}
+
+@media screen and (width >= 900px) {
+    .taskHeader{
+        flex-direction: row;
     }
 }

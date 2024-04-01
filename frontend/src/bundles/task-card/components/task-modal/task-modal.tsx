@@ -13,7 +13,7 @@ import {
 } from '@mui/icons-material';
 import { Textarea } from '~/bundles/common/components/textarea/textarea';
 import { TaskHistory } from '~/bundles/history-modal/components/task-history/task-history';
-import { formatDateTime, getValidClassNames } from '~/bundles/common/helpers/helpers';
+import { formatDateTime, formatTime, getValidClassNames } from '~/bundles/common/helpers/helpers';
 import { taskActions } from '../../store/slice';
 import { Task } from '../../types/task.type';
 import { TaskPriority } from '~/bundles/common/enums/enums';
@@ -79,24 +79,30 @@ const TaskModal: React.FC<Properties> = ({
         const updatePayload: Partial<FormInputs> = {};
 
         Object.keys(allFormValues).forEach((key) => {
+
             if (
                 key in initialState &&
                 allFormValues[key as keyof FormInputs] !== initialState[key]
             ) {
-                updatePayload[key as keyof FormInputs] = allFormValues[key as keyof FormInputs];
+                if (key === 'dueDate' && allFormValues.dueDate && initialState.dueDate) {
+                    const newValue = formatTime(allFormValues.dueDate.toISOString());
+                    const initialValue= formatTime(initialState.dueDate.toISOString());
+                    if (newValue !== initialValue) 
+                    updatePayload[key as keyof FormInputs] = allFormValues[key as keyof FormInputs];
+                }
+                else {
+
+                    updatePayload[key as keyof FormInputs] = allFormValues[key as keyof FormInputs];
+                }
             }
         });
         const { dueDate, ...rest } = updatePayload;
-        console.log(allFormValues, initialState)
-        // if(updatePayload.listId){
-        //     dispatch(taskActions.moveTask({ id: task.id, listId:updatePayload.listId })); 
-        // }
         dispatch(taskActions.updateTask({
             id: task.id,
-            dueDate: dueDate?.toISOString(),
+            dueDate: dueDate ? formatTime(dueDate.toISOString()) :undefined,
             ...rest
         }));
-       setIsEditMode(false);
+        setIsEditMode(false);
     }, []);
     return (
         <Modal
@@ -168,6 +174,7 @@ const TaskModal: React.FC<Properties> = ({
                                             {isEditMode
                                                 ?
                                                 <Select
+                                                    isDisabled={!Boolean(moveToOptions.length)}
                                                     control={control}
                                                     name={'listId'}
                                                     options={moveToOptions}
@@ -204,12 +211,12 @@ const TaskModal: React.FC<Properties> = ({
                                             {isEditMode
                                                 ?
                                                 <Select
-                                                control={control}
-                                                name={'priority'}
-                                                options={[
-                                                    {value:TaskPriority.LOW,label:TaskPriority.LOW},
-                                                    {value:TaskPriority.MEDIUM,label:TaskPriority.MEDIUM},
-                                                    {value:TaskPriority.HIGH,label:TaskPriority.HIGH}]} />
+                                                    control={control}
+                                                    name={'priority'}
+                                                    options={[
+                                                        { value: TaskPriority.LOW, label: TaskPriority.LOW },
+                                                        { value: TaskPriority.MEDIUM, label: TaskPriority.MEDIUM },
+                                                        { value: TaskPriority.HIGH, label: TaskPriority.HIGH }]} />
                                                 :
                                                 <div className={styles.value}>{task.priority}</div>}
                                         </div>
@@ -220,7 +227,7 @@ const TaskModal: React.FC<Properties> = ({
                                     {isEditMode
                                         ?
                                         <Textarea
-                                            minRows={4}
+                                            minRows={7}
                                             maxRows={100}
                                             control={control}
                                             errors={formState.errors}

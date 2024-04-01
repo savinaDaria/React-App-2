@@ -100,10 +100,10 @@ const TaskList: React.FC<Properties> = ({
                             value={editedName}
                             onBlur={handleInputNameBlur}
                             onChange={(e) => setEditedName(e.target.value)}
-                            className={getValidClassNames(styles.inputName, styles.listTitle)}
+                            className={getValidClassNames(styles.inputName, 'title')}
                         />
                         :
-                        (<Typography variant="h6" className={styles.listTitle}>
+                        (<Typography variant="h6" className={'title'}>
                             {editedName}
                         </Typography>)
                 }
