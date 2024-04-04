@@ -45,6 +45,6 @@ export class TaskEntity {
   @JoinColumn({ name: 'list_id' })
   list: TaskListEntity;
 
-  @OneToMany(() => ActivityLogEntity, (log) => log.task)
+  @OneToMany(() => ActivityLogEntity, (log) => log.task,{cascade: true})
   logs: ActivityLogEntity[];
 }

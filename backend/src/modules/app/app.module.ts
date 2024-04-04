@@ -5,21 +5,23 @@ import { getTypeOrmConfig } from '~/utils/database-config/typeorm.config';
 import { TaskModule } from '~/modules/task/task.module';
 import { TaskListModule } from '~/modules/task-list/task-list.module';
 import { ActivityLogModule } from '~/modules/activity-log/activity-log.module';
+import { BoardModule } from '../board/board.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule.forRoot({
-        envFilePath: '.env', 
+        envFilePath: '.env',
       })],
       useFactory: async (config: ConfigService) => getTypeOrmConfig(config),
       inject: [ConfigService],
     }),
     ActivityLogModule,
     TaskModule,
-   TaskListModule
+    BoardModule,
+    TaskListModule
   ],
   controllers: [],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }
