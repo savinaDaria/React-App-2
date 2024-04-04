@@ -52,6 +52,10 @@ export class TaskService {
         await this.logActivity(ActivityTypeBasic.DELETE, id)
     }
 
+    async hardDeleteTask(id: number): Promise<void> {
+        await this.tasksRepository.delete(id)
+    }
+
     async updateTask(id: number, updateTaskDto: UpdateTaskDto): Promise<TaskEntity> {
         const task = await this.getTaskById(id);
 

@@ -4,6 +4,7 @@ dotenv.config();
 import { DataSource } from 'typeorm';
 
 export const connectionSource = new DataSource({
+  name:'default',
   type: 'postgres',
 
   host: process.env.POSTGRES_HOST,
