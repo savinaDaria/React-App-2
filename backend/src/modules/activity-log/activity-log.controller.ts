@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { ActivityLogService } from './activity-log.service';
 import { CreateActivityLogDto } from './dto/index';
 import { ActivityLogEntity } from './activity-log.entity';

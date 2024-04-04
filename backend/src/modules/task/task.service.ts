@@ -1,5 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { ActivityTypeBasic, TaskPriority } from './enums/index';
+import { ActivityTypeBasic } from './enums/index';
 import { CreateTaskDto, UpdateTaskDto } from './dto/index';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TaskEntity } from './task.entity';
@@ -85,8 +85,8 @@ export class TaskService {
     private async logActivity(
         actionType: string,
         id: number,
-        oldValue?: any,
-        newValue?: any,
+        oldValue?: string,
+        newValue?: string,
         property?: string,
     ): Promise<void> {
 

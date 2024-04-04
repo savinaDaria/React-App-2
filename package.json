@@ -8,7 +8,7 @@
     "start:frontend": "cd frontend && npm start",
     "start:backend": "cd backend && npm start",
     "start:backend:dev": "cd backend && npm run start:dev",
-    "start:migration":" cd backend && npm run typeorm migration:run -- -d src/utils/database-config/connection-config.ts"
+    "start:migration": " cd backend && npm run typeorm migration:run -- -d src/utils/database-config/connection-config.ts"
   },
   "repository": {
     "type": "git",
@@ -19,5 +19,19 @@
   "bugs": {
     "url": "https://github.com/savinaDaria/React-App/issues"
   },
-  "homepage": "https://github.com/savinaDaria/React-App#readme"
+  "homepage": "https://github.com/savinaDaria/React-App#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-config-standard-with-typescript": "^43.0.1",
+    "eslint-formatter-table": "^7.32.1",
+    "eslint-plugin-import": "^2.29.1",
+    "eslint-plugin-n": "^16.6.2",
+    "eslint-plugin-prettier": "^5.1.3",
+    "eslint-plugin-promise": "^6.1.1",
+    "eslint-plugin-react": "^7.34.1",
+    "prettier": "3.2.5",
+    "typescript": "^5.4.3"
+  }
 }
