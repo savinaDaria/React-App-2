@@ -22,11 +22,25 @@ export class BoardService {
     return boards;
   }
 
-  async getBoardById(boardId: number): Promise<BoardEntity> {
-    const board = await this.boardRepository.findOneBy({ id: boardId });
+  async getBoardById(id: number): Promise<BoardEntity> {
+    const board = await this.boardRepository
+    .createQueryBuilder('board')
+    .leftJoinAndSelect('board.logs', 'logs')
+    .leftJoinAndSelect('logs.task', 'task') // Join logs with tasks
+    .leftJoinAndSelect('board.lists', 'lists')
+    .leftJoinAndSelect('lists.tasks', 'listTasks') // You may need to join lists with tasks if logs are associated with list tasks
+    .select([
+      'board',
+      'logs',
+      'lists',
+      'task.name', // Select the name directly from task
+      'listTasks' // Select list tasks if needed
+    ])
+    .where('board.id = :id', { id })
+    .getOne();
 
     if (!board) {
-      throw new NotFoundException(`Board with id ${boardId} not found`);
+      throw new NotFoundException(`Board with id ${id} not found`);
     }
 
     return board;
@@ -44,7 +58,6 @@ export class BoardService {
   }
 
   async deleteBoard(id: number): Promise<void> {
-    console.log('delete')
     const board = await this.getBoardById(id);
 
     if (!board) {

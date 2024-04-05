@@ -1,12 +1,12 @@
 import { HttpApiBase } from "~/framework/api/api-base";
-import { GetAllListsResponse } from "../types/get-all-lists.type";
+import { GetAllListsResponse } from "../types/get-lists.type";
 import { CreateListRequest, CreateListResponse } from "../types/create-list.type";
 import { UpdateListRequest, UpdateListResponse } from "../types/update-list.type";
 import { DeleteListRequest } from "../types/delete-list.type";
 
 class TaskListApiService extends HttpApiBase {
-    public async getAllLists(): Promise<GetAllListsResponse> {
-        return this.get<GetAllListsResponse>('/task-list');
+    public async getAllLists(boardId:number): Promise<GetAllListsResponse> {
+        return this.get<GetAllListsResponse>(`/task-list?boardId=${boardId}`);
     }
 
     public async createList(data: CreateListRequest): Promise<CreateListResponse> {

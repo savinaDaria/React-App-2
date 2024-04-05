@@ -22,6 +22,15 @@ export class TaskListService {
     return lists;
   }
 
+  async getTaskListsByBoardId(boardId:number): Promise<TaskListEntity[]> {
+    const lists = await this.listRepository.find({ 
+      where: {boardId},
+      relations: ['tasks'],
+      order: { dateCreated: 'DESC' } });
+
+    return lists;
+  }
+
   async getTaskListById(listId: number): Promise<TaskListEntity> {
     const list = await this.listRepository.findOneBy({ id: listId });
 

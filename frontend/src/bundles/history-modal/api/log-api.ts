@@ -3,8 +3,8 @@ import { type GetAllLogsResponse } from "../types/get-all-logs.type";
 import { type GetTaskLogsResponse, type GetTaskLogsRequest } from "../types/get-task-logs.type";
 
 class ActivityLogService extends HttpApiBase {
-    public async getAllLogs(): Promise<GetAllLogsResponse> {
-        return this.get<GetAllLogsResponse>('/activity-logs');
+    public async getAllLogs(boardId:number): Promise<GetAllLogsResponse> {
+        return this.get<GetAllLogsResponse>(`/activity-logs/?boardId=${boardId}`);
     }
 
     public async getTaskLogs(data:GetTaskLogsRequest): Promise<GetTaskLogsResponse> {

@@ -1,0 +1,34 @@
+.boardCard {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin: 10px;
+  padding: 0 20px;
+  border: 1px solid var(--slate-gray);
+  width: 30%;
+  height: 100px;
+  box-sizing: border-box;
+  align-content: center;
+  border-radius: 10px;
+  background-color: var(--cloudy-sky-1);
+  flex-direction: row;
+
+  &:hover {
+    background-color: var(--slate-gray);
+    color: var(--white-lilac);
+  }
+}
+
+.boardLink {
+  font-weight: 600;
+  text-shadow: 0 1px 1px rgb(128, 127, 127);
+  color: var(--steel-gray);
+  letter-spacing: 0.5px;
+  text-decoration: none;
+  display: block;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
