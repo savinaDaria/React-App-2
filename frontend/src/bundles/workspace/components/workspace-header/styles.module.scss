@@ -1,0 +1,42 @@
+.boardHeader {
+  display: flex;
+  height: var(--header-height);
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.boardTitle{
+  font-weight: 600;
+  text-shadow: 0 1px 1px rgb(128, 127, 127);
+  color:var(--steel-gray);
+  letter-spacing:0.5px;
+}
+
+.boardMenu {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.btn {
+  border: none;
+  cursor: pointer;
+  text-transform: none;
+  padding: 7px 20px;
+  box-shadow: none;
+  &.history {
+    background-color: var(--white-lilac);
+    color: var(--text-primary-dark);
+  }
+
+  &.newList {
+    background-color: var(--st-tropaz);
+    color: var(--white-lilac);
+  }
+  
+  &:hover {
+    background-color: var(--slate-gray);
+    color: var(--white-lilac);
+  }
+}

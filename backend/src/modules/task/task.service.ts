@@ -18,18 +18,23 @@ export class TaskService {
     ) { }
 
     async getAllTasks(): Promise<TaskEntity[]> {
-        return this.tasksRepository.find({order: { dateCreated: 'ASC' } });
+        return this.tasksRepository.find({ order: { dateCreated: 'ASC' } });
     }
 
     async getTaskById(id: number): Promise<TaskEntity> {
 
         const foundTask = await this.tasksRepository
-            .createQueryBuilder('task')
-            .leftJoin('task.list', 'list')
-            .select(['task', 'list.name'])
-            .leftJoinAndSelect('task.logs', 'logs')
-            .where('task.id = :id', { id })
-            .getOne();
+        .createQueryBuilder('task')
+        .leftJoin('task.list', 'list')
+        .leftJoin('list.board', 'board') 
+        .select([
+          'task',
+          'list.name',
+          'board.id' 
+        ])
+        .leftJoinAndSelect('task.logs', 'logs')
+        .where('task.id = :id', { id })
+        .getOne();
 
         if (!foundTask) {
             throw new NotFoundException(`Task with the given ID "${id}" was not found.`);
@@ -41,18 +46,30 @@ export class TaskService {
     async createTask(createTaskDto: CreateTaskDto): Promise<TaskEntity> {
 
         const task = this.tasksRepository.create(createTaskDto);
-
         await this.tasksRepository.save(task);
-        await this.logActivity(ActivityTypeBasic.ADD, task.id)
+        const fulltask=await this.getTaskById(task.id);
+        await this.logActivity(ActivityTypeBasic.ADD, task.id,fulltask.list.board.id)
         return task;
     }
 
     async deleteTask(id: number): Promise<void> {
+        const task = await this.getTaskById(id);
+
+        if (!task) {
+            throw new NotFoundException(`Task with the ID "${id}" was not found.`);
+        }
+
         await this.tasksRepository.softDelete(id)
-        await this.logActivity(ActivityTypeBasic.DELETE, id)
+        await this.logActivity(ActivityTypeBasic.DELETE, id, task.list.board.id)
     }
 
     async hardDeleteTask(id: number): Promise<void> {
+        const task = await this.getTaskById(id);
+
+        if (!task) {
+            throw new NotFoundException(`Task with the ID "${id}" was not found.`);
+        }
+
         await this.tasksRepository.delete(id)
     }
 
@@ -79,7 +96,14 @@ export class TaskService {
                     newValue = typeof updateTaskDto[prop] == 'string' ? updateTaskDto[prop] : updateTaskDto[prop];
                     oldValue = typeof oldValues[prop] == 'string' ? oldValues[prop] : oldValues[prop];
                 }
-                await this.logActivity(ActivityTypeBasic.UPDATE, oldValues.id, oldValue, newValue, prop);
+                await this.logActivity(
+                    ActivityTypeBasic.UPDATE,
+                    oldValues.id,
+                    oldValues.list.board.id,
+                    oldValue,
+                    newValue,
+                    prop
+                );
             }
         }
 
@@ -89,20 +113,22 @@ export class TaskService {
     private async logActivity(
         actionType: string,
         id: number,
+        boardId: number,
         oldValue?: string,
         newValue?: string,
         property?: string,
-    ): Promise<void> {
+    ): Promise < void> {
 
-        const createActivityLogDto: CreateActivityLogDto = {
-            taskId: id,
-            actionType,
-            oldValue,
-            newValue,
-            property
-        };
+    const createActivityLogDto: CreateActivityLogDto = {
+        taskId: id,
+        boardId,
+        actionType,
+        oldValue,
+        newValue,
+        property
+    };
 
-        await this.activityLogService.createActivityLog(createActivityLogDto);
-    }
+    await this.activityLogService.createActivityLog(createActivityLogDto);
+}
 
 }

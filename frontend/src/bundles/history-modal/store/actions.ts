@@ -1,19 +1,19 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AsyncThunkConfig } from "~/framework/store/store";
 import { sliceName } from "./store.config";
-import { GetAllLogsResponse } from "../types/get-all-logs.type";
+import { GetAllLogsRequest, GetAllLogsResponse } from "../types/get-all-logs.type";
 import { GetTaskLogsRequest, GetTaskLogsResponse } from "../types/get-task-logs.type";
 
 const getAllLogs = createAsyncThunk<
     GetAllLogsResponse | null,
-    undefined,
+    GetAllLogsRequest,
     AsyncThunkConfig
 >(
     `${sliceName}/get-all-logs`,
     async (_findPayload, { extra, rejectWithValue }) => {
 
         try {
-            const task = await extra.activityLogApi.getAllLogs();
+            const task = await extra.activityLogApi.getAllLogs(_findPayload.boardId);
             return task;
         } catch (error) {
             rejectWithValue({

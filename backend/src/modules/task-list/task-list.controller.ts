@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
 import { TaskListService } from './task-list.service';
 import { CreateTaskListDto, UpdateTaskListDto  } from './dto/index';
 import { TaskListEntity } from './task-list.entity';
@@ -8,8 +8,8 @@ export class TaskListController {
     constructor(private taskListService: TaskListService) {}
 
     @Get()
-    async getAllTaskLists(): Promise<TaskListEntity[]> {
-        return this.taskListService.getTaskLists();        
+    async getAllTaskLists(@Query('boardId') boardId?: number): Promise<TaskListEntity[]> {
+        return this.taskListService.getTaskListsByBoardId(boardId);        
     }
 
     @Get('/:id')

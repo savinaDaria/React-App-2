@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AsyncThunkConfig } from "~/framework/store/store";
-import { GetAllListsResponse } from "../types/get-all-lists.type";
+import { GetAllListsResponse, GetListsRequest } from "../types/get-lists.type";
 import { sliceName } from "./store.config";
 import { DeleteListRequest } from "../types/delete-list.type";
 import { CreateListRequest, CreateListResponse } from "../types/create-list.type";
@@ -8,14 +8,14 @@ import { UpdateListRequest, UpdateListResponse } from "../types/update-list.type
 
 const getLists = createAsyncThunk<
     GetAllListsResponse | null,
-    undefined,
+    GetListsRequest,
     AsyncThunkConfig
 >(
     `${sliceName}/get-all-lists`,
     async (_findPayload, { extra, rejectWithValue }) => {
 
         try {
-            const lists = await extra.listApi.getAllLists();
+            const lists = await extra.listApi.getAllLists(_findPayload.boardId);
             return lists.map(list => ({ ...list, recentlyCreated: false }));
         } catch (error) {
             rejectWithValue({

@@ -1,8 +1,8 @@
-import { TaskBoard } from '~/bundles/task-board/components/board/board';
+import { Workspace } from '~/bundles/workspace/pages/workspace/workspace';
 
 function App() {
 return (
-      <TaskBoard />
+      <Workspace />
   )
 }
 

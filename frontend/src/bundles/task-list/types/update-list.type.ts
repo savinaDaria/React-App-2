@@ -1,6 +1,8 @@
-import { type CreateListRequest, type CreateListResponse } from './create-list.type';
+import { type CreateListResponse } from './create-list.type';
 
-type UpdateListForm= Partial<CreateListRequest> ;
+type UpdateListForm= {
+    name:string
+};
 
 type UpdateListRequest = UpdateListForm &
 {

@@ -25,7 +25,7 @@ type Properties = {
     onListUpdate: (updateBody: UpdateListRequest) => void;
     onListDelete: ({ id }: DeleteListRequest) => void;
 };
-const getListsState = (state: RootState) => state.taskLists;
+const getCurrentState = (state: RootState) => state.currentBoard.board;
 
 const TaskList: React.FC<Properties> = ({
     taskList,
@@ -36,13 +36,13 @@ const TaskList: React.FC<Properties> = ({
     const inputRef = useRef<HTMLInputElement>(null);
     const [isEditInputActive, setIsEditInputActive] = useState(taskList.recentlyCreated);
 
-    const lists = useSelector(
-        (rootState) => getListsState(rootState).taskLists,
+    const currentBoard = useSelector(
+        (rootState) => getCurrentState(rootState),
     );
-    const moveToOptions = lists.filter(list => list.id !== taskList.id).map(list => ({
+    const moveToOptions = currentBoard?.lists.filter(list => list.id !== taskList.id).map(list => ({
         label: list.name,
         value: list.id,
-    }));
+    })) ?? [];
     useEffect(() => {
         isEditInputActive && inputRef.current?.focus();
     }, [isEditInputActive]);
@@ -79,8 +79,8 @@ const TaskList: React.FC<Properties> = ({
 
     const handleResetTask = useCallback(() => {
         dispatch(taskActions.resetState());
-        dispatch(taskListActions.getLists());
-    }, [dispatch]);
+       if(currentBoard) dispatch(taskListActions.getLists({boardId:currentBoard.id}));
+    }, [currentBoard, dispatch]);
 
     const handleCreateTask = useCallback((request: CreateTaskRequest) => {
         dispatch(taskActions.createTask(request));

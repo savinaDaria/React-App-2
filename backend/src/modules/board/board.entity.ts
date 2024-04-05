@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 
 import { TaskListEntity } from '../task-list/task-list.entity';
+import { ActivityLogEntity } from '../activity-log/activity-log.entity';
 
 @Entity('board')
 export class BoardEntity {
@@ -25,4 +26,7 @@ export class BoardEntity {
 
   @OneToMany(() => TaskListEntity, (list) => list.board, { cascade: true})
   lists: TaskListEntity[];
+
+  @OneToMany(() => ActivityLogEntity, (log) => log.board, { cascade: true})
+  logs: ActivityLogEntity[];
 }

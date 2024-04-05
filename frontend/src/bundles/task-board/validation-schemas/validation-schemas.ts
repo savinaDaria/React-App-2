@@ -1,0 +1,1 @@
+export { BoardEditValidationSchema } from './board-edit.validation-schema.js';

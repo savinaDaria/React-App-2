@@ -12,13 +12,24 @@ export class ActivityLogService {
     ) { }
 
     async getActivityLogs(): Promise<ActivityLogEntity[]> {
-        const lists = await this.activityLogRepository 
+        const logs = await this.activityLogRepository 
         .find({
             relations: ['task'],
             withDeleted: true,
           });
 
-        return lists;
+        return logs;
+    }
+
+    async getActivityLogsByBoardId(boardId:number): Promise<ActivityLogEntity[]> {
+        const logs = await this.activityLogRepository 
+        .find({
+            where:{boardId},
+            relations: ['task'],
+            withDeleted: true,
+          });
+
+        return logs;
     }
 
     async getActivityLogByTaskId(taskId: number): Promise<ActivityLogEntity> {

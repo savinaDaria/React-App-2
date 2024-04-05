@@ -15,6 +15,6 @@ export {
 export {
     useLocation,
     useNavigate,
-    useParams as useParameters,
+    useParams,
 } from 'react-router-dom';
 export { useAppForm as useForm } from './use-app-form.hook';

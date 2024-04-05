@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { ActivityLogService } from './activity-log.service';
 import { CreateActivityLogDto } from './dto/index';
 import { ActivityLogEntity } from './activity-log.entity';
@@ -8,8 +8,8 @@ export class ActivityLogController {
     constructor(private taskListService: ActivityLogService) {}
 
     @Get()
-    async getAllActivityLogs(): Promise<ActivityLogEntity[]> {
-        return this.taskListService.getActivityLogs();
+    async getAllActivityLogs(@Query('boardId')boardId:number): Promise<ActivityLogEntity[]> {
+        return this.taskListService.getActivityLogsByBoardId(boardId);
         
     }
 

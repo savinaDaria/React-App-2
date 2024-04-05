@@ -7,6 +7,7 @@ import {
   JoinColumn,
 } from 'typeorm';
 import { TaskEntity } from '../task/task.entity';
+import { BoardEntity } from '../board/board.entity';
 
 @Entity('activity_log')
 export class ActivityLogEntity {
@@ -15,6 +16,9 @@ export class ActivityLogEntity {
 
   @Column({ name: 'task_id', nullable: false })
   taskId: number;
+
+  @Column({ name: 'board_id', nullable: false })
+  boardId: number;
 
   @Column({ name: 'action_type', nullable: false })
   actionType: string;
@@ -34,4 +38,8 @@ export class ActivityLogEntity {
   @ManyToOne(() => TaskEntity, (task) => task.logs)
   @JoinColumn({ name: 'task_id' })
   task: TaskEntity;
+
+  @ManyToOne(() => BoardEntity, (board) => board.logs)
+  @JoinColumn({ name: 'board_id' })
+  board: BoardEntity;
 }
